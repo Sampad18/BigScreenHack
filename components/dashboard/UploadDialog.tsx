@@ -1,9 +1,9 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Upload, Loader2, Shield, AlertTriangle, CheckCircle, XCircle,
-  Volume2, ThumbsUp, ThumbsDown, Film, ThumbsUp as Accept
+  ThumbsUp, ThumbsDown, Film
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,6 @@ export function UploadDialog({
 }: { open: boolean; onOpenChange: (v: boolean) => void; tokensRemaining: number }) {
   const router = useRouter();
   const supabase = createClient();
-  const audioRef = useRef<HTMLAudioElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [step, setStep] = useState<Step>("input");
@@ -44,6 +43,13 @@ export function UploadDialog({
   const [outputVideoUrl, setOutputVideoUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [transcript, setTranscript] = useState("");
+
+  useEffect(() => {
+    if (!audioUrl) return;
+    const audio = new Audio(audioUrl);
+    audio.play().catch(() => {});
+    return () => { audio.pause(); };
+  }, [audioUrl]);
 
   function handleVideoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -59,7 +65,6 @@ export function UploadDialog({
   }
 
   function handleClose() {
-    if (["uploading", "transcribing", "checking", "modifying"].includes(step)) return;
     resetDialog();
     onOpenChange(false);
   }
@@ -73,11 +78,23 @@ export function UploadDialog({
     try {
       const { data: { user } } = await supabase.auth.getUser();
 
-      // Upload video
-      const path = `${user!.id}/${Date.now()}-${videoFile.name}`;
-      const { error: uploadErr } = await supabase.storage.from("uploads").upload(path, videoFile);
-      if (uploadErr) throw new Error("Video upload failed");
-      const { data: { publicUrl } } = supabase.storage.from("uploads").getPublicUrl(path);
+      // Get signed upload URL from server (bypasses RLS)
+      const urlRes = await fetch("/api/upload-url", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: videoFile.name }),
+      });
+      if (!urlRes.ok) {
+        const urlErr = await urlRes.json();
+        throw new Error("Upload URL error: " + (urlErr.error ?? urlRes.status));
+      }
+      const { signedUrl, token, path, publicUrl, accessUrl } = await urlRes.json();
+
+      // Upload directly to Supabase using signed URL
+      const { error: uploadErr } = await supabase.storage
+        .from("uploads")
+        .uploadToSignedUrl(path, token, videoFile, { contentType: videoFile.type });
+      if (uploadErr) throw new Error("Video upload failed: " + uploadErr.message);
 
       // Create generation record
       const { data: gen, error: genErr } = await supabase.from("generations").insert({
@@ -95,7 +112,7 @@ export function UploadDialog({
       const transcribeRes = await fetch("/api/transcribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ videoUrl: publicUrl, generationId: gen.id }),
+        body: JSON.stringify({ videoUrl: accessUrl, generationId: gen.id }),
       });
       const transcribeData = await transcribeRes.json();
       if (!transcribeRes.ok) throw new Error("Transcription failed");
@@ -122,6 +139,12 @@ export function UploadDialog({
     if (result.isCompliant) {
       setStep("compliant");
       router.refresh();
+      // Describe what the video depicts
+      fetch("/api/audio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content, generationId: genId }),
+      }).then((r) => r.json()).then((d) => { if (d.audioUrl) setAudioUrl(d.audioUrl); }).catch(() => {});
     } else {
       setViolations(result.violations);
       await runPlannerStep(genId, content, result.violations);
@@ -142,7 +165,7 @@ export function UploadDialog({
     const audioRes = await fetch("/api/audio", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ script: result.audioScript, generationId: genId }),
+      body: JSON.stringify({ violations: viols, generationId: genId }),
     });
     const audioData = await audioRes.json();
     if (audioRes.ok && audioData.audioUrl) setAudioUrl(audioData.audioUrl);
@@ -291,15 +314,6 @@ export function UploadDialog({
               </div>
             </div>
 
-            {audioUrl && (
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Volume2 className="w-4 h-4 text-blue-400" />
-                  <span className="text-sm text-zinc-300 font-medium">Agent explanation (listen before deciding)</span>
-                </div>
-                <audio ref={audioRef} src={audioUrl} controls className="w-full h-8 accent-blue-500" />
-              </div>
-            )}
 
             <div className="bg-emerald-950/30 border border-emerald-800/50 rounded-xl p-3">
               <p className="text-xs text-zinc-400">

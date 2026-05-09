@@ -1,6 +1,48 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient, createServiceClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { textToSpeech } from "@/lib/elevenlabs";
+import OpenAI from "openai";
+
+interface Violation {
+  ruleCode: string;
+  ruleTitle: string;
+  severity: string;
+  explanation: string;
+  legalReference: string;
+}
+
+function buildViolationScript(violations: Violation[]): string {
+  const count = violations.length;
+  const ruleList = violations
+    .map((v) => `${v.ruleTitle}, ${v.severity.toLowerCase()} severity`)
+    .join("; ");
+  return `Helmet detected ${count} violation${count !== 1 ? "s" : ""}. ${ruleList}. A compliant version is ready for your review.`;
+}
+
+async function buildDescriptionScript(content: string): Promise<string> {
+  const deepseek = new OpenAI({
+    apiKey: process.env.DEEPSEEK_API_KEY,
+    baseURL: "https://api.deepseek.com",
+  });
+
+  const response = await deepseek.chat.completions.create({
+    model: "deepseek-chat",
+    max_tokens: 120,
+    messages: [
+      {
+        role: "system",
+        content: "Write a natural spoken audio script of 2-3 sentences (under 75 words) describing what a video depicts based on the content. Start with 'This video depicts'. End with 'No rules are being broken. This content is fully compliant.' Sound conversational, not robotic.",
+      },
+      {
+        role: "user",
+        content,
+      },
+    ],
+  });
+
+  return response.choices[0].message.content?.trim() ??
+    `This video depicts ${content.slice(0, 150)}. No rules are being broken. This content is fully compliant.`;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -8,32 +50,32 @@ export async function POST(req: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { script, generationId } = await req.json();
-    if (!script) return NextResponse.json({ error: "script is required" }, { status: 400 });
+    const body = await req.json();
+    const { violations, content, generationId } = body as {
+      violations?: Violation[];
+      content?: string;
+      generationId?: string;
+    };
 
-    const audioBuffer = await textToSpeech(script);
+    let script: string;
 
-    // Upload audio to Supabase storage
-    const serviceClient = await createServiceClient();
-    const audioPath = `${user.id}/${Date.now()}-explanation.mp3`;
-    const { error: uploadErr } = await serviceClient.storage
-      .from("audio")
-      .upload(audioPath, audioBuffer, { contentType: "audio/mpeg" });
-
-    if (uploadErr) throw new Error("Audio upload failed: " + uploadErr.message);
-
-    const { data: { publicUrl } } = serviceClient.storage.from("audio").getPublicUrl(audioPath);
-
-    if (generationId) {
-      await serviceClient.from("generations").update({
-        audio_explanation_url: publicUrl,
-      }).eq("id", generationId);
+    if (violations?.length) {
+      // Violations found — list the broken rules
+      script = buildViolationScript(violations);
+    } else if (content) {
+      // No violations — describe what the video is about
+      script = await buildDescriptionScript(content);
+    } else {
+      return NextResponse.json({ error: "No content provided" }, { status: 400 });
     }
 
-    return NextResponse.json({ audioUrl: publicUrl });
+    const audioBuffer = await textToSpeech(script);
+    const base64 = audioBuffer.toString("base64");
+    const audioUrl = `data:audio/mpeg;base64,${base64}`;
+
+    return NextResponse.json({ audioUrl });
   } catch (err) {
     console.error("Audio generation error:", err);
-    // Return empty audioUrl rather than failing the whole pipeline
     return NextResponse.json({ audioUrl: null, error: err instanceof Error ? err.message : "Audio failed" });
   }
 }

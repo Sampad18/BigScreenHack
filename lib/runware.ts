@@ -25,15 +25,86 @@ async function runwareRequest(tasks: object[]) {
 }
 
 export async function transcribeVideo(videoUrl: string): Promise<string> {
-  const data = await runwareRequest([
-    {
-      taskType: "transcription",
-      taskUUID: uuidv4(),
-      model: "memories:1@1",
-      inputs: { video: videoUrl },
-    },
-  ]);
-  return data[0]?.text ?? "";
+  const apiKey = process.env.RUNWARE_API_KEY!;
+  const WS_URL = "wss://ws-api.runware.ai/v1";
+
+  return new Promise<string>((resolve, reject) => {
+    const ws = new WebSocket(WS_URL, { perMessageDeflate: false } as WebSocket.ClientOptions);
+    let taskUUID: string | null = null;
+    let pollInterval: ReturnType<typeof setInterval> | null = null;
+    let resolved = false;
+
+    const done = (text: string) => {
+      if (resolved) return;
+      resolved = true;
+      if (pollInterval) clearInterval(pollInterval);
+      clearTimeout(timeout);
+      try { ws.close(); } catch {}
+      resolve(text);
+    };
+
+    const fail = (err: Error) => {
+      if (resolved) return;
+      resolved = true;
+      if (pollInterval) clearInterval(pollInterval);
+      clearTimeout(timeout);
+      try { ws.close(); } catch {}
+      reject(err);
+    };
+
+    const timeout = setTimeout(() => fail(new Error("Transcription timeout (180s)")), 180_000);
+
+    const send = (tasks: object[]) => {
+      if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(tasks));
+    };
+
+    ws.on("open", () => send([{ taskType: "authentication", apiKey }]));
+
+    ws.on("message", (raw: WebSocket.RawData) => {
+      let items: unknown[];
+      try {
+        const parsed = JSON.parse(raw.toString());
+        items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.data) ? parsed.data : []);
+      } catch { return; }
+
+      for (const item of items) {
+        const obj = item as Record<string, unknown>;
+
+        if (obj.taskType === "authentication" && !obj.error) {
+          taskUUID = uuidv4();
+          send([{
+            taskType: "transcription",
+            taskUUID,
+            model: "memories:1@1",
+            inputs: { video: videoUrl },
+            deliveryMethod: "async",
+          }]);
+          continue;
+        }
+
+        if (obj.taskType === "transcription" && obj.taskUUID === taskUUID && !pollInterval) {
+          pollInterval = setInterval(() => {
+            send([{ taskType: "getResponse", taskUUID }]);
+          }, 3000);
+          continue;
+        }
+
+        if (obj.error || (Array.isArray(obj.errors) && (obj.errors as unknown[]).length)) {
+          fail(new Error((obj.errorMessage as string) ?? JSON.stringify(obj.errors ?? obj.error)));
+          return;
+        }
+
+        if (obj.status === "success") {
+          const text = (obj.text as string) ?? (obj.transcript as string) ?? "";
+          done(text);
+          return;
+        }
+      }
+    });
+
+    ws.on("error", (err: Error) => fail(new Error(`WebSocket error: ${err.message}`)));
+    ws.on("close", (code: number) => { if (!resolved) fail(new Error(`WebSocket closed (${code})`)); });
+  });
 }
 
 export async function captionImage(imageInput: string): Promise<string> {
@@ -144,10 +215,9 @@ export async function generateVideo(params: VideoGenParams): Promise<string> {
           return;
         }
 
-        // Poll result with status=success — extract video URL
+        // Response with status=success — videoURL is the CDN URL, videoUUID is just the UUID
         if (obj.status === "success") {
           const url =
-            (obj.videoUUID as string) ??
             (obj.videoURL as string) ??
             (obj.videoUrl as string) ??
             (obj.url as string) ?? "";
@@ -157,7 +227,6 @@ export async function generateVideo(params: VideoGenParams): Promise<string> {
         // Direct response on videoInference taskUUID (sync fallback)
         if (obj.taskUUID === videoTaskUUID) {
           const url =
-            (obj.videoUUID as string) ??
             (obj.videoURL as string) ??
             (obj.videoUrl as string) ??
             (obj.url as string) ?? "";

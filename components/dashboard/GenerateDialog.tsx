@@ -1,9 +1,9 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Film, Image as ImageIcon, Loader2, Shield, AlertTriangle,
-  CheckCircle, XCircle, Volume2, ThumbsUp, ThumbsDown, Upload, X, Sparkles
+  CheckCircle, XCircle, ThumbsUp, ThumbsDown, X, Sparkles
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -33,7 +33,6 @@ export function GenerateDialog({
 }: { open: boolean; onOpenChange: (v: boolean) => void; tokensRemaining: number }) {
   const router = useRouter();
   const supabase = createClient();
-  const audioRef = useRef<HTMLAudioElement>(null);
 
   const [step, setStep] = useState<Step>("input");
   const [statusMsg, setStatusMsg] = useState("");
@@ -48,6 +47,14 @@ export function GenerateDialog({
   const [errorMessage, setErrorMessage] = useState("");
   const [isCompliant, setIsCompliant] = useState(false);
   const [loopCount, setLoopCount] = useState(0);
+
+  // Autoplay audio as soon as it's ready — no visible player
+  useEffect(() => {
+    if (!audioUrl) return;
+    const audio = new Audio(audioUrl);
+    audio.play().catch(() => {});
+    return () => { audio.pause(); };
+  }, [audioUrl]);
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -137,6 +144,12 @@ export function GenerateDialog({
     if (result.isCompliant) {
       setIsCompliant(true);
       setStatusMsg("Content is compliant! Starting video generation...");
+      // Describe the video in audio (non-blocking)
+      fetch("/api/audio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content, generationId: genId }),
+      }).then((r) => r.json()).then((d) => { if (d.audioUrl) setAudioUrl(d.audioUrl); }).catch(() => {});
       await generateVideo(genId, content);
     } else {
       setViolations(result.violations);
@@ -161,7 +174,11 @@ export function GenerateDialog({
     const audioRes = await fetch("/api/audio", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ script: result.audioScript, generationId: genId }),
+      body: JSON.stringify({
+        violations: viols,
+        modifiedPrompt: result.modifiedPrompt,
+        generationId: genId,
+      }),
     });
     const audioData = await audioRes.json();
     if (audioRes.ok && audioData.audioUrl) {
@@ -365,15 +382,6 @@ export function GenerateDialog({
               </p>
             </div>
 
-            {audioUrl && (
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <Volume2 className="w-4 h-4 text-blue-400" />
-                  <span className="text-sm text-zinc-300 font-medium">Agent explanation</span>
-                </div>
-                <audio ref={audioRef} src={audioUrl} controls className="w-full h-8 accent-blue-500" />
-              </div>
-            )}
 
             <div className="flex gap-3">
               <Button onClick={handleApprove} variant="success" className="flex-1">
@@ -401,7 +409,7 @@ export function GenerateDialog({
               />
             </div>
             <div className="flex gap-3">
-              <a href={videoUrl} download={`helmet-video.mp4`} className="flex-1">
+              <a href={`/api/download-video?url=${encodeURIComponent(videoUrl)}&filename=helmet-video.mp4`} download="helmet-video.mp4" className="flex-1">
                 <Button variant="success" className="w-full">
                   Download Video
                 </Button>

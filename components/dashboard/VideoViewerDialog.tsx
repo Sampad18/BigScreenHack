@@ -96,7 +96,7 @@ export function VideoViewerDialog({
                     })}
                   </span>
                   <a
-                    href={gen.output_video_url}
+                    href={`/api/download-video?url=${encodeURIComponent(gen.output_video_url)}&filename=helmet-${gen.id}.mp4`}
                     download={`helmet-${gen.id}.mp4`}
                     className="flex items-center gap-1.5 text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg transition-colors"
                   >
