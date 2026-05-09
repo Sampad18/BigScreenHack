@@ -59,6 +59,50 @@ export function UploadDialog({
     setVideoFile(file);
   }
 
+  async function extractVideoFrames(file: File, count = 4): Promise<string[]> {
+    return new Promise((resolve) => {
+      const video = document.createElement("video");
+      const objectUrl = URL.createObjectURL(file);
+      video.src = objectUrl;
+      video.muted = true;
+      video.crossOrigin = "anonymous";
+
+      video.addEventListener("loadedmetadata", async () => {
+        const duration = video.duration || 10;
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d")!;
+        const frames: string[] = [];
+
+        for (let i = 0; i < count; i++) {
+          await new Promise<void>((res) => {
+            video.currentTime = (duration / (count + 1)) * (i + 1);
+            const onSeeked = () => {
+              video.removeEventListener("seeked", onSeeked);
+              const maxW = 640;
+              const scale = Math.min(1, maxW / video.videoWidth);
+              canvas.width = Math.round(video.videoWidth * scale);
+              canvas.height = Math.round(video.videoHeight * scale);
+              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+              frames.push(canvas.toDataURL("image/jpeg", 0.75));
+              res();
+            };
+            video.addEventListener("seeked", onSeeked);
+          });
+        }
+
+        URL.revokeObjectURL(objectUrl);
+        resolve(frames);
+      });
+
+      video.addEventListener("error", () => {
+        URL.revokeObjectURL(objectUrl);
+        resolve([]);
+      });
+
+      video.load();
+    });
+  }
+
   function resetDialog() {
     setStep("input"); setVideoFile(null); setGenerationId(null); setViolations([]);
     setPlannerResult(null); setAudioUrl(null); setOutputVideoUrl(null); setErrorMessage(""); setTranscript("");
@@ -78,6 +122,9 @@ export function UploadDialog({
     try {
       const { data: { user } } = await supabase.auth.getUser();
 
+      // Extract video frames client-side and upload in parallel
+      const framesPromise = extractVideoFrames(videoFile, 4);
+
       // Get signed upload URL from server (bypasses RLS)
       const urlRes = await fetch("/api/upload-url", {
         method: "POST",
@@ -88,7 +135,7 @@ export function UploadDialog({
         const urlErr = await urlRes.json();
         throw new Error("Upload URL error: " + (urlErr.error ?? urlRes.status));
       }
-      const { signedUrl, token, path, publicUrl, accessUrl } = await urlRes.json();
+      const { signedUrl, token, path, publicUrl } = await urlRes.json();
 
       // Upload directly to Supabase using signed URL
       const { error: uploadErr } = await supabase.storage
@@ -108,14 +155,15 @@ export function UploadDialog({
 
       setStep("transcribing");
 
-      // Transcribe
+      // Wait for frames and send them for AI visual analysis
+      const frames = await framesPromise;
       const transcribeRes = await fetch("/api/transcribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ videoUrl: accessUrl, generationId: gen.id }),
+        body: JSON.stringify({ imageFrames: frames, generationId: gen.id }),
       });
       const transcribeData = await transcribeRes.json();
-      if (!transcribeRes.ok) throw new Error("Transcription failed");
+      if (!transcribeRes.ok) throw new Error("Video analysis failed");
       setTranscript(transcribeData.combinedText);
 
       // Lawyer check
@@ -263,12 +311,12 @@ export function UploadDialog({
             <div className="text-center">
               <div className="text-white font-medium text-lg">
                 {step === "uploading" && "Uploading video..."}
-                {step === "transcribing" && "Transcribing video..."}
+                {step === "transcribing" && "Analyzing video content..."}
                 {step === "checking" && "Running legal compliance check..."}
                 {step === "modifying" && "Finding compliant workarounds..."}
               </div>
               <div className="text-zinc-400 text-sm mt-1">
-                {step === "transcribing" && "Converting audio to text for analysis"}
+                {step === "transcribing" && "AI is watching key frames of your video"}
                 {step === "checking" && "Checking against 30+ EU and international rules"}
               </div>
             </div>

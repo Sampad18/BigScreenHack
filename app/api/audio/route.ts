@@ -31,7 +31,7 @@ async function buildDescriptionScript(content: string): Promise<string> {
     messages: [
       {
         role: "system",
-        content: "Write a natural spoken audio script of 2-3 sentences (under 75 words) describing what a video depicts based on the content. Start with 'This video depicts'. End with 'No rules are being broken. This content is fully compliant.' Sound conversational, not robotic.",
+        content: "Write a natural spoken audio script of 2-3 sentences (under 75 words) describing what a video shows based on the visual analysis. Start with 'This video shows'. End with 'No rules are being broken. This content is fully compliant.' Sound conversational, not robotic.",
       },
       {
         role: "user",

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { transcribeVideo, captionImage } from "@/lib/runware";
+import { captionImage } from "@/lib/runware";
 
 export const maxDuration = 200;
 
@@ -11,18 +11,28 @@ export async function POST(req: NextRequest) {
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await req.json();
-    const { text, imageBase64, videoUrl, generationId } = body;
+    const { text, imageBase64, imageFrames, generationId } = body;
 
     let combinedText = text ?? "";
 
-    // Transcribe uploaded video → use Runware "transcription" taskType
-    if (videoUrl) {
-      const transcript = await transcribeVideo(videoUrl);
-      combinedText = transcript;
+    // AI visual analysis: caption multiple video frames extracted client-side
+    if (imageFrames?.length) {
+      const captions = await Promise.all(
+        (imageFrames as string[]).map((frame, i) =>
+          captionImage(frame)
+            .then((c) => (c ? `Frame ${i + 1}: ${c}` : null))
+            .catch(() => null)
+        )
+      );
+      const valid = captions.filter(Boolean) as string[];
+      if (valid.length > 0) {
+        combinedText = `Video visual analysis (${valid.length} key frames):\n\n${valid.join("\n\n")}`;
+      } else {
+        combinedText = "Video content could not be analyzed visually.";
+      }
     }
 
-    // Caption image → use Runware "caption" taskType
-    // Pass the full data URI directly — Runware accepts data:image/...;base64,... format
+    // Caption a single image (used by GenerateDialog for image input)
     if (imageBase64) {
       try {
         const caption = await captionImage(imageBase64);
@@ -32,7 +42,6 @@ export async function POST(req: NextRequest) {
             : `Image description: ${caption}`;
         }
       } catch (captionErr) {
-        // Non-fatal: continue with text-only if captioning fails
         console.error("Image caption error:", captionErr);
       }
     }
@@ -49,7 +58,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error("Transcribe error:", err);
     return NextResponse.json({
-      error: err instanceof Error ? err.message : "Transcription failed",
+      error: err instanceof Error ? err.message : "Video analysis failed",
     }, { status: 500 });
   }
 }

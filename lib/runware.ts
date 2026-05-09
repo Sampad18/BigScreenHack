@@ -25,86 +25,43 @@ async function runwareRequest(tasks: object[]) {
 }
 
 export async function transcribeVideo(videoUrl: string): Promise<string> {
-  const apiKey = process.env.RUNWARE_API_KEY!;
-  const WS_URL = "wss://ws-api.runware.ai/v1";
+  const taskUUID = uuidv4();
 
-  return new Promise<string>((resolve, reject) => {
-    const ws = new WebSocket(WS_URL, { perMessageDeflate: false } as WebSocket.ClientOptions);
-    let taskUUID: string | null = null;
-    let pollInterval: ReturnType<typeof setInterval> | null = null;
-    let resolved = false;
+  // Submit transcription task via HTTP
+  const submitData = await runwareRequest([{
+    taskType: "audioTranscription",
+    taskUUID,
+    model: "openai:whisper-large-v3",
+    inputAudio: videoUrl,
+    deliveryMethod: "async",
+  }]);
+  console.log("Transcription submitted:", JSON.stringify(submitData));
 
-    const done = (text: string) => {
-      if (resolved) return;
-      resolved = true;
-      if (pollInterval) clearInterval(pollInterval);
-      clearTimeout(timeout);
-      try { ws.close(); } catch {}
-      resolve(text);
-    };
-
-    const fail = (err: Error) => {
-      if (resolved) return;
-      resolved = true;
-      if (pollInterval) clearInterval(pollInterval);
-      clearTimeout(timeout);
-      try { ws.close(); } catch {}
-      reject(err);
-    };
-
-    const timeout = setTimeout(() => fail(new Error("Transcription timeout (180s)")), 180_000);
-
-    const send = (tasks: object[]) => {
-      if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(tasks));
-    };
-
-    ws.on("open", () => send([{ taskType: "authentication", apiKey }]));
-
-    ws.on("message", (raw: WebSocket.RawData) => {
-      let items: unknown[];
-      try {
-        const parsed = JSON.parse(raw.toString());
-        items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.data) ? parsed.data : []);
-      } catch { return; }
-
-      for (const item of items) {
-        const obj = item as Record<string, unknown>;
-
-        if (obj.taskType === "authentication" && !obj.error) {
-          taskUUID = uuidv4();
-          send([{
-            taskType: "transcription",
-            taskUUID,
-            model: "memories:1@1",
-            inputs: { video: videoUrl },
-            deliveryMethod: "async",
-          }]);
-          continue;
+  // Poll via HTTP every 4 seconds for up to 3 minutes
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  for (let i = 0; i < 45; i++) {
+    await sleep(4000);
+    try {
+      const pollData = await runwareRequest([{
+        taskType: "getResponse",
+        taskUUID,
+      }]);
+      console.log("Transcription poll:", JSON.stringify(pollData));
+      if (Array.isArray(pollData) && pollData.length > 0) {
+        const result = pollData[0] as Record<string, unknown>;
+        if (result.status === "success") {
+          return (result.text as string) ?? (result.transcript as string) ?? "";
         }
-
-        if (obj.taskType === "transcription" && obj.taskUUID === taskUUID && !pollInterval) {
-          pollInterval = setInterval(() => {
-            send([{ taskType: "getResponse", taskUUID }]);
-          }, 3000);
-          continue;
-        }
-
-        if (obj.error || (Array.isArray(obj.errors) && (obj.errors as unknown[]).length)) {
-          fail(new Error((obj.errorMessage as string) ?? JSON.stringify(obj.errors ?? obj.error)));
-          return;
-        }
-
-        if (obj.status === "success") {
-          const text = (obj.text as string) ?? (obj.transcript as string) ?? "";
-          done(text);
-          return;
+        if (result.status === "failed" || result.error) {
+          throw new Error((result.errorMessage as string) ?? "Transcription failed on Runware");
         }
       }
-    });
+    } catch (e) {
+      console.warn("Poll attempt failed:", e);
+    }
+  }
 
-    ws.on("error", (err: Error) => fail(new Error(`WebSocket error: ${err.message}`)));
-    ws.on("close", (code: number) => { if (!resolved) fail(new Error(`WebSocket closed (${code})`)); });
-  });
+  throw new Error("Transcription timeout after 3 minutes");
 }
 
 export async function captionImage(imageInput: string): Promise<string> {
@@ -114,7 +71,7 @@ export async function captionImage(imageInput: string): Promise<string> {
       taskUUID: uuidv4(),
       model: "runware:151@1",
       inputImage: imageInput,
-      prompt: "Describe this image in detail: subjects, setting, mood, colors, style, and notable elements.",
+      prompt: "This is a frame from a video. Describe what you see in detail: people, objects, text, brands, activities, setting, and anything that could raise legal or compliance concerns.",
     },
   ]);
   return data[0]?.text ?? data[0]?.structuredData ?? "";
