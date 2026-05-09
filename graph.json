@@ -1,0 +1,2524 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "middleware.ts",
+      "file_type": "code",
+      "source_file": "middleware.ts",
+      "source_location": "L1",
+      "id": "middleware_ts",
+      "community": 10,
+      "norm_label": "middleware.ts"
+    },
+    {
+      "label": "middleware()",
+      "file_type": "code",
+      "source_file": "middleware.ts",
+      "source_location": "L4",
+      "id": "helmet_io_middleware_middleware",
+      "community": 10,
+      "norm_label": "middleware()"
+    },
+    {
+      "label": "next-env.d.ts",
+      "file_type": "code",
+      "source_file": "next-env.d.ts",
+      "source_location": "L1",
+      "id": "next_env_d_ts",
+      "community": 12,
+      "norm_label": "next-env.d.ts"
+    },
+    {
+      "label": "next.config.js",
+      "file_type": "code",
+      "source_file": "next.config.js",
+      "source_location": "L1",
+      "id": "next_config_js",
+      "community": 13,
+      "norm_label": "next.config.js"
+    },
+    {
+      "label": "postcss.config.js",
+      "file_type": "code",
+      "source_file": "postcss.config.js",
+      "source_location": "L1",
+      "id": "postcss_config_js",
+      "community": 14,
+      "norm_label": "postcss.config.js"
+    },
+    {
+      "label": "tailwind.config.ts",
+      "file_type": "code",
+      "source_file": "tailwind.config.ts",
+      "source_location": "L1",
+      "id": "tailwind_config_ts",
+      "community": 15,
+      "norm_label": "tailwind.config.ts"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "app/layout.tsx",
+      "source_location": "L1",
+      "id": "app_layout_tsx",
+      "community": 11,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "app/layout.tsx",
+      "source_location": "L13",
+      "id": "app_layout_rootlayout",
+      "community": 11,
+      "norm_label": "rootlayout()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/page.tsx",
+      "source_location": "L1",
+      "id": "app_page_tsx",
+      "community": 4,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "Home()",
+      "file_type": "code",
+      "source_file": "app/page.tsx",
+      "source_location": "L4",
+      "id": "app_page_home",
+      "community": 4,
+      "norm_label": "home()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L1",
+      "id": "app_api_audio_route_ts",
+      "community": 8,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L5",
+      "id": "audio_route_post",
+      "community": 8,
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app/api/generate-video/route.ts",
+      "source_location": "L1",
+      "id": "app_api_generate_video_route_ts",
+      "community": 9,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "app/api/generate-video/route.ts",
+      "source_location": "L5",
+      "id": "generate_video_route_post",
+      "community": 9,
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L1",
+      "id": "app_api_lawyer_route_ts",
+      "community": 7,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L5",
+      "id": "lawyer_route_post",
+      "community": 7,
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L1",
+      "id": "app_api_planner_route_ts",
+      "community": 6,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L5",
+      "id": "planner_route_post",
+      "community": 6,
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app/api/profile/route.ts",
+      "source_location": "L1",
+      "id": "app_api_profile_route_ts",
+      "community": 4,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app/api/profile/route.ts",
+      "source_location": "L4",
+      "id": "profile_route_get",
+      "community": 4,
+      "norm_label": "get()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L1",
+      "id": "app_api_transcribe_route_ts",
+      "community": 5,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L5",
+      "id": "transcribe_route_post",
+      "community": 5,
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "app/auth/callback/route.ts",
+      "source_location": "L1",
+      "id": "app_auth_callback_route_ts",
+      "community": 4,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "app/auth/callback/route.ts",
+      "source_location": "L4",
+      "id": "callback_route_get",
+      "community": 4,
+      "norm_label": "get()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/dashboard/page.tsx",
+      "source_location": "L1",
+      "id": "app_dashboard_page_tsx",
+      "community": 4,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "DashboardPage()",
+      "file_type": "code",
+      "source_file": "app/dashboard/page.tsx",
+      "source_location": "L5",
+      "id": "dashboard_page_dashboardpage",
+      "community": 4,
+      "norm_label": "dashboardpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/login/page.tsx",
+      "source_location": "L1",
+      "id": "app_login_page_tsx",
+      "community": 0,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "LoginPage()",
+      "file_type": "code",
+      "source_file": "app/login/page.tsx",
+      "source_location": "L12",
+      "id": "login_page_loginpage",
+      "community": 0,
+      "norm_label": "loginpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "app/signup/page.tsx",
+      "source_location": "L1",
+      "id": "app_signup_page_tsx",
+      "community": 0,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "SignupPage()",
+      "file_type": "code",
+      "source_file": "app/signup/page.tsx",
+      "source_location": "L12",
+      "id": "signup_page_signuppage",
+      "community": 0,
+      "norm_label": "signuppage()"
+    },
+    {
+      "label": "DashboardClient.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L1",
+      "id": "components_dashboard_dashboardclient_tsx",
+      "community": 0,
+      "norm_label": "dashboardclient.tsx"
+    },
+    {
+      "label": "DashboardClient()",
+      "file_type": "code",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L29",
+      "id": "dashboard_dashboardclient_dashboardclient",
+      "community": 0,
+      "norm_label": "dashboardclient()"
+    },
+    {
+      "label": "GenerateDialog.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L1",
+      "id": "components_dashboard_generatedialog_tsx",
+      "community": 2,
+      "norm_label": "generatedialog.tsx"
+    },
+    {
+      "label": "handleImageChange()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L51",
+      "id": "dashboard_generatedialog_handleimagechange",
+      "community": 2,
+      "norm_label": "handleimagechange()"
+    },
+    {
+      "label": "resetDialog()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L61",
+      "id": "dashboard_generatedialog_resetdialog",
+      "community": 2,
+      "norm_label": "resetdialog()"
+    },
+    {
+      "label": "handleClose()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L67",
+      "id": "dashboard_generatedialog_handleclose",
+      "community": 2,
+      "norm_label": "handleclose()"
+    },
+    {
+      "label": "uploadImage()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L73",
+      "id": "dashboard_generatedialog_uploadimage",
+      "community": 2,
+      "norm_label": "uploadimage()"
+    },
+    {
+      "label": "startGeneration()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L82",
+      "id": "dashboard_generatedialog_startgeneration",
+      "community": 2,
+      "norm_label": "startgeneration()"
+    },
+    {
+      "label": "runLawyerCheck()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L120",
+      "id": "dashboard_generatedialog_runlawyercheck",
+      "community": 2,
+      "norm_label": "runlawyercheck()"
+    },
+    {
+      "label": "runPlannerStep()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L141",
+      "id": "dashboard_generatedialog_runplannerstep",
+      "community": 2,
+      "norm_label": "runplannerstep()"
+    },
+    {
+      "label": "handleApprove()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L166",
+      "id": "dashboard_generatedialog_handleapprove",
+      "community": 2,
+      "norm_label": "handleapprove()"
+    },
+    {
+      "label": "handleReject()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L172",
+      "id": "dashboard_generatedialog_handlereject",
+      "community": 2,
+      "norm_label": "handlereject()"
+    },
+    {
+      "label": "generateVideo()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L179",
+      "id": "dashboard_generatedialog_generatevideo",
+      "community": 2,
+      "norm_label": "generatevideo()"
+    },
+    {
+      "label": "severityColor()",
+      "file_type": "code",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L201",
+      "id": "dashboard_generatedialog_severitycolor",
+      "community": 2,
+      "norm_label": "severitycolor()"
+    },
+    {
+      "label": "UploadDialog.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L1",
+      "id": "components_dashboard_uploaddialog_tsx",
+      "community": 3,
+      "norm_label": "uploaddialog.tsx"
+    },
+    {
+      "label": "handleVideoChange()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L48",
+      "id": "dashboard_uploaddialog_handlevideochange",
+      "community": 3,
+      "norm_label": "handlevideochange()"
+    },
+    {
+      "label": "resetDialog()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L56",
+      "id": "dashboard_uploaddialog_resetdialog",
+      "community": 3,
+      "norm_label": "resetdialog()"
+    },
+    {
+      "label": "handleClose()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L61",
+      "id": "dashboard_uploaddialog_handleclose",
+      "community": 3,
+      "norm_label": "handleclose()"
+    },
+    {
+      "label": "startCheck()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L67",
+      "id": "dashboard_uploaddialog_startcheck",
+      "community": 3,
+      "norm_label": "startcheck()"
+    },
+    {
+      "label": "runLawyerCheck()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L112",
+      "id": "dashboard_uploaddialog_runlawyercheck",
+      "community": 3,
+      "norm_label": "runlawyercheck()"
+    },
+    {
+      "label": "runPlannerStep()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L131",
+      "id": "dashboard_uploaddialog_runplannerstep",
+      "community": 3,
+      "norm_label": "runplannerstep()"
+    },
+    {
+      "label": "handleApprove()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L153",
+      "id": "dashboard_uploaddialog_handleapprove",
+      "community": 3,
+      "norm_label": "handleapprove()"
+    },
+    {
+      "label": "handleReject()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L171",
+      "id": "dashboard_uploaddialog_handlereject",
+      "community": 3,
+      "norm_label": "handlereject()"
+    },
+    {
+      "label": "severityColor()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L177",
+      "id": "dashboard_uploaddialog_severitycolor",
+      "community": 3,
+      "norm_label": "severitycolor()"
+    },
+    {
+      "label": "badge.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/badge.tsx",
+      "source_location": "L1",
+      "id": "components_ui_badge_tsx",
+      "community": 0,
+      "norm_label": "badge.tsx"
+    },
+    {
+      "label": "button.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/button.tsx",
+      "source_location": "L1",
+      "id": "components_ui_button_tsx",
+      "community": 0,
+      "norm_label": "button.tsx"
+    },
+    {
+      "label": "dialog.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L1",
+      "id": "components_ui_dialog_tsx",
+      "community": 0,
+      "norm_label": "dialog.tsx"
+    },
+    {
+      "label": "input.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/input.tsx",
+      "source_location": "L1",
+      "id": "components_ui_input_tsx",
+      "community": 0,
+      "norm_label": "input.tsx"
+    },
+    {
+      "label": "label.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/label.tsx",
+      "source_location": "L1",
+      "id": "components_ui_label_tsx",
+      "community": 0,
+      "norm_label": "label.tsx"
+    },
+    {
+      "label": "progress.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/progress.tsx",
+      "source_location": "L1",
+      "id": "components_ui_progress_tsx",
+      "community": 0,
+      "norm_label": "progress.tsx"
+    },
+    {
+      "label": "elevenlabs.ts",
+      "file_type": "code",
+      "source_file": "lib/elevenlabs.ts",
+      "source_location": "L1",
+      "id": "lib_elevenlabs_ts",
+      "community": 8,
+      "norm_label": "elevenlabs.ts"
+    },
+    {
+      "label": "textToSpeech()",
+      "file_type": "code",
+      "source_file": "lib/elevenlabs.ts",
+      "source_location": "L3",
+      "id": "lib_elevenlabs_texttospeech",
+      "community": 8,
+      "norm_label": "texttospeech()"
+    },
+    {
+      "label": "runware.ts",
+      "file_type": "code",
+      "source_file": "lib/runware.ts",
+      "source_location": "L1",
+      "id": "lib_runware_ts",
+      "community": 5,
+      "norm_label": "runware.ts"
+    },
+    {
+      "label": "runwareRequest()",
+      "file_type": "code",
+      "source_file": "lib/runware.ts",
+      "source_location": "L5",
+      "id": "lib_runware_runwarerequest",
+      "community": 5,
+      "norm_label": "runwarerequest()"
+    },
+    {
+      "label": "transcribeVideo()",
+      "file_type": "code",
+      "source_file": "lib/runware.ts",
+      "source_location": "L25",
+      "id": "lib_runware_transcribevideo",
+      "community": 5,
+      "norm_label": "transcribevideo()"
+    },
+    {
+      "label": "captionImage()",
+      "file_type": "code",
+      "source_file": "lib/runware.ts",
+      "source_location": "L37",
+      "id": "lib_runware_captionimage",
+      "community": 5,
+      "norm_label": "captionimage()"
+    },
+    {
+      "label": "generateVideo()",
+      "file_type": "code",
+      "source_file": "lib/runware.ts",
+      "source_location": "L56",
+      "id": "lib_runware_generatevideo",
+      "community": 5,
+      "norm_label": "generatevideo()"
+    },
+    {
+      "label": "utils.ts",
+      "file_type": "code",
+      "source_file": "lib/utils.ts",
+      "source_location": "L1",
+      "id": "lib_utils_ts",
+      "community": 0,
+      "norm_label": "utils.ts"
+    },
+    {
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "lib/utils.ts",
+      "source_location": "L4",
+      "id": "lib_utils_cn",
+      "community": 0,
+      "norm_label": "cn()"
+    },
+    {
+      "label": "formatTokens()",
+      "file_type": "code",
+      "source_file": "lib/utils.ts",
+      "source_location": "L8",
+      "id": "lib_utils_formattokens",
+      "community": 0,
+      "norm_label": "formattokens()"
+    },
+    {
+      "label": "lawyer.ts",
+      "file_type": "code",
+      "source_file": "lib/agents/lawyer.ts",
+      "source_location": "L1",
+      "id": "lib_agents_lawyer_ts",
+      "community": 7,
+      "norm_label": "lawyer.ts"
+    },
+    {
+      "label": "runLawyerAgent()",
+      "file_type": "code",
+      "source_file": "lib/agents/lawyer.ts",
+      "source_location": "L21",
+      "id": "agents_lawyer_runlawyeragent",
+      "community": 7,
+      "norm_label": "runlawyeragent()"
+    },
+    {
+      "label": "planner.ts",
+      "file_type": "code",
+      "source_file": "lib/agents/planner.ts",
+      "source_location": "L1",
+      "id": "lib_agents_planner_ts",
+      "community": 6,
+      "norm_label": "planner.ts"
+    },
+    {
+      "label": "runPlannerAgent()",
+      "file_type": "code",
+      "source_file": "lib/agents/planner.ts",
+      "source_location": "L18",
+      "id": "agents_planner_runplanneragent",
+      "community": 6,
+      "norm_label": "runplanneragent()"
+    },
+    {
+      "label": "client.ts",
+      "file_type": "code",
+      "source_file": "lib/supabase/client.ts",
+      "source_location": "L1",
+      "id": "lib_supabase_client_ts",
+      "community": 0,
+      "norm_label": "client.ts"
+    },
+    {
+      "label": "createClient()",
+      "file_type": "code",
+      "source_file": "lib/supabase/client.ts",
+      "source_location": "L3",
+      "id": "supabase_client_createclient",
+      "community": 0,
+      "norm_label": "createclient()"
+    },
+    {
+      "label": "server.ts",
+      "file_type": "code",
+      "source_file": "lib/supabase/server.ts",
+      "source_location": "L1",
+      "id": "lib_supabase_server_ts",
+      "community": 4,
+      "norm_label": "server.ts"
+    },
+    {
+      "label": "createClient()",
+      "file_type": "code",
+      "source_file": "lib/supabase/server.ts",
+      "source_location": "L4",
+      "id": "supabase_server_createclient",
+      "community": 4,
+      "norm_label": "createclient()"
+    },
+    {
+      "label": "createServiceClient()",
+      "file_type": "code",
+      "source_file": "lib/supabase/server.ts",
+      "source_location": "L24",
+      "id": "supabase_server_createserviceclient",
+      "community": 9,
+      "norm_label": "createserviceclient()"
+    },
+    {
+      "label": "SETUP.md",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L1",
+      "id": "setup_md",
+      "community": 1,
+      "norm_label": "setup.md"
+    },
+    {
+      "label": "Helmet.io Setup Guide",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L1",
+      "id": "helmet_io_setup_helmet_io_setup_guide",
+      "community": 1,
+      "norm_label": "helmet.io setup guide"
+    },
+    {
+      "label": "Prerequisites",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L3",
+      "id": "helmet_io_setup_prerequisites",
+      "community": 1,
+      "norm_label": "prerequisites"
+    },
+    {
+      "label": "Step 1: Supabase Setup",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L14",
+      "id": "helmet_io_setup_step_1_supabase_setup",
+      "community": 1,
+      "norm_label": "step 1: supabase setup"
+    },
+    {
+      "label": "Step 2: ElevenLabs Voice ID",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L31",
+      "id": "helmet_io_setup_step_2_elevenlabs_voice_id",
+      "community": 1,
+      "norm_label": "step 2: elevenlabs voice id"
+    },
+    {
+      "label": "Step 3: Create .env.local",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L40",
+      "id": "helmet_io_setup_step_3_create_env_local",
+      "community": 1,
+      "norm_label": "step 3: create .env.local"
+    },
+    {
+      "label": "code:bash (cp .env.example .env.local)",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L44",
+      "id": "helmet_io_setup_codeblock_1",
+      "community": 1,
+      "norm_label": "code:bash (cp .env.example .env.local)"
+    },
+    {
+      "label": "code:block2 (NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co)",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L49",
+      "id": "helmet_io_setup_codeblock_2",
+      "community": 1,
+      "norm_label": "code:block2 (next_public_supabase_url=https://your-project.supabase.co)"
+    },
+    {
+      "label": "Step 4: Install & Run",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L62",
+      "id": "helmet_io_setup_step_4_install_run",
+      "community": 1,
+      "norm_label": "step 4: install & run"
+    },
+    {
+      "label": "code:bash (cd helmet-io)",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L64",
+      "id": "helmet_io_setup_codeblock_3",
+      "community": 1,
+      "norm_label": "code:bash (cd helmet-io)"
+    },
+    {
+      "label": "Token System",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L74",
+      "id": "helmet_io_setup_token_system",
+      "community": 1,
+      "norm_label": "token system"
+    },
+    {
+      "label": "Architecture",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L83",
+      "id": "helmet_io_setup_architecture",
+      "community": 1,
+      "norm_label": "architecture"
+    },
+    {
+      "label": "code:block4 (User Input (text / text+image / video))",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L85",
+      "id": "helmet_io_setup_codeblock_4",
+      "community": 1,
+      "norm_label": "code:block4 (user input (text / text+image / video))"
+    },
+    {
+      "label": "Rules Graph",
+      "file_type": "document",
+      "source_file": "SETUP.md",
+      "source_location": "L101",
+      "id": "helmet_io_setup_rules_graph",
+      "community": 1,
+      "norm_label": "rules graph"
+    },
+    {
+      "label": "next.config.ts",
+      "file_type": "code",
+      "source_file": "next.config.ts",
+      "source_location": "L1",
+      "community": 16,
+      "norm_label": "next.config.ts",
+      "id": "next_config_ts"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "middleware.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "middleware_ts",
+      "target": "helmet_io_middleware_middleware"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/layout.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_layout_tsx",
+      "target": "app_layout_rootlayout"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page_tsx",
+      "target": "lib_supabase_server_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page_tsx",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page_tsx",
+      "target": "app_page_home"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_audio_route_ts",
+      "target": "lib_supabase_server_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_audio_route_ts",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_audio_route_ts",
+      "target": "supabase_server_createserviceclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_audio_route_ts",
+      "target": "lib_elevenlabs_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_audio_route_ts",
+      "target": "lib_elevenlabs_texttospeech"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_audio_route_ts",
+      "target": "audio_route_post"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "audio_route_post",
+      "target": "lib_elevenlabs_texttospeech"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/api/audio/route.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "audio_route_post",
+      "target": "supabase_server_createserviceclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/generate-video/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_generate_video_route_ts",
+      "target": "lib_supabase_server_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/generate-video/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_generate_video_route_ts",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/generate-video/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_generate_video_route_ts",
+      "target": "supabase_server_createserviceclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/generate-video/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_generate_video_route_ts",
+      "target": "lib_runware_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/generate-video/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_generate_video_route_ts",
+      "target": "lib_runware_generatevideo"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/generate-video/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_generate_video_route_ts",
+      "target": "generate_video_route_post"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/api/generate-video/route.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "generate_video_route_post",
+      "target": "supabase_server_createserviceclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_lawyer_route_ts",
+      "target": "lib_supabase_server_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_lawyer_route_ts",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_lawyer_route_ts",
+      "target": "supabase_server_createserviceclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_lawyer_route_ts",
+      "target": "lib_agents_lawyer_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_lawyer_route_ts",
+      "target": "agents_lawyer_runlawyeragent"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_lawyer_route_ts",
+      "target": "lawyer_route_post"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "lawyer_route_post",
+      "target": "supabase_server_createserviceclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/api/lawyer/route.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "lawyer_route_post",
+      "target": "agents_lawyer_runlawyeragent"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_planner_route_ts",
+      "target": "lib_supabase_server_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_planner_route_ts",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_planner_route_ts",
+      "target": "supabase_server_createserviceclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_planner_route_ts",
+      "target": "lib_agents_planner_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_planner_route_ts",
+      "target": "agents_planner_runplanneragent"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_planner_route_ts",
+      "target": "planner_route_post"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "planner_route_post",
+      "target": "agents_planner_runplanneragent"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/api/planner/route.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "planner_route_post",
+      "target": "supabase_server_createserviceclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/profile/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_profile_route_ts",
+      "target": "lib_supabase_server_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/profile/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_profile_route_ts",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/profile/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_profile_route_ts",
+      "target": "profile_route_get"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_transcribe_route_ts",
+      "target": "lib_supabase_server_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_transcribe_route_ts",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_transcribe_route_ts",
+      "target": "lib_runware_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_transcribe_route_ts",
+      "target": "lib_runware_transcribevideo"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_transcribe_route_ts",
+      "target": "lib_runware_captionimage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_api_transcribe_route_ts",
+      "target": "transcribe_route_post"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "transcribe_route_post",
+      "target": "lib_runware_transcribevideo"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/api/transcribe/route.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "transcribe_route_post",
+      "target": "lib_runware_captionimage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/auth/callback/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_auth_callback_route_ts",
+      "target": "lib_supabase_server_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/auth/callback/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_auth_callback_route_ts",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/auth/callback/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_auth_callback_route_ts",
+      "target": "callback_route_get"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_dashboard_page_tsx",
+      "target": "lib_supabase_server_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_dashboard_page_tsx",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_dashboard_page_tsx",
+      "target": "components_dashboard_dashboardclient_tsx"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_dashboard_page_tsx",
+      "target": "dashboard_dashboardclient_dashboardclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_dashboard_page_tsx",
+      "target": "dashboard_page_dashboardpage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/login/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_login_page_tsx",
+      "target": "lib_supabase_client_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/login/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_login_page_tsx",
+      "target": "supabase_client_createclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/login/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_login_page_tsx",
+      "target": "components_ui_button_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/login/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_login_page_tsx",
+      "target": "components_ui_input_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/login/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_login_page_tsx",
+      "target": "components_ui_label_tsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/login/page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_login_page_tsx",
+      "target": "login_page_loginpage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/signup/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_signup_page_tsx",
+      "target": "lib_supabase_client_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/signup/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_signup_page_tsx",
+      "target": "supabase_client_createclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/signup/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_signup_page_tsx",
+      "target": "components_ui_button_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/signup/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_signup_page_tsx",
+      "target": "components_ui_input_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/signup/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_signup_page_tsx",
+      "target": "components_ui_label_tsx"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/signup/page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_signup_page_tsx",
+      "target": "signup_page_signuppage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_dashboardclient_tsx",
+      "target": "lib_supabase_client_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_dashboardclient_tsx",
+      "target": "supabase_client_createclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_dashboardclient_tsx",
+      "target": "components_ui_button_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_dashboardclient_tsx",
+      "target": "components_ui_badge_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_dashboardclient_tsx",
+      "target": "components_dashboard_generatedialog_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_dashboardclient_tsx",
+      "target": "components_dashboard_uploaddialog_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_dashboardclient_tsx",
+      "target": "lib_utils_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_dashboardclient_tsx",
+      "target": "lib_utils_formattokens"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/DashboardClient.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_dashboardclient_tsx",
+      "target": "dashboard_dashboardclient_dashboardclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "components_ui_dialog_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "components_ui_button_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "components_ui_badge_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "lib_supabase_client_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "supabase_client_createclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_handleimagechange"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L61",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_resetdialog"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_handleclose"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L73",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_uploadimage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L82",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_startgeneration"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L120",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_runlawyercheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L141",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_runplannerstep"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L166",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_handleapprove"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L172",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_handlereject"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L179",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_generatevideo"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L201",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_generatedialog_tsx",
+      "target": "dashboard_generatedialog_severitycolor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L69",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_generatedialog_handleclose",
+      "target": "dashboard_generatedialog_resetdialog"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L90",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_generatedialog_startgeneration",
+      "target": "dashboard_generatedialog_uploadimage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L113",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_generatedialog_startgeneration",
+      "target": "dashboard_generatedialog_runlawyercheck"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L134",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_generatedialog_runlawyercheck",
+      "target": "dashboard_generatedialog_generatevideo"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L137",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_generatedialog_runlawyercheck",
+      "target": "dashboard_generatedialog_runplannerstep"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L176",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_generatedialog_handlereject",
+      "target": "dashboard_generatedialog_runlawyercheck"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/GenerateDialog.tsx",
+      "source_location": "L169",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_generatedialog_handleapprove",
+      "target": "dashboard_generatedialog_generatevideo"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "components_ui_dialog_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "components_ui_button_tsx"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "lib_supabase_client_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "supabase_client_createclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "dashboard_uploaddialog_handlevideochange"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L56",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "dashboard_uploaddialog_resetdialog"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L61",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "dashboard_uploaddialog_handleclose"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "dashboard_uploaddialog_startcheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "dashboard_uploaddialog_runlawyercheck"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L131",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "dashboard_uploaddialog_runplannerstep"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L153",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "dashboard_uploaddialog_handleapprove"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L171",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "dashboard_uploaddialog_handlereject"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L177",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dashboard_uploaddialog_tsx",
+      "target": "dashboard_uploaddialog_severitycolor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_uploaddialog_handleclose",
+      "target": "dashboard_uploaddialog_resetdialog"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L105",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_uploaddialog_startcheck",
+      "target": "dashboard_uploaddialog_runlawyercheck"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L127",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_uploaddialog_runlawyercheck",
+      "target": "dashboard_uploaddialog_runplannerstep"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/dashboard/UploadDialog.tsx",
+      "source_location": "L174",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_uploaddialog_handlereject",
+      "target": "dashboard_uploaddialog_runlawyercheck"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/badge.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_badge_tsx",
+      "target": "lib_utils_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/badge.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_badge_tsx",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/button.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_button_tsx",
+      "target": "lib_utils_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/button.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_button_tsx",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_dialog_tsx",
+      "target": "lib_utils_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/dialog.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_dialog_tsx",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/input.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_input_tsx",
+      "target": "lib_utils_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/input.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_input_tsx",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/label.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_label_tsx",
+      "target": "lib_utils_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/label.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_label_tsx",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/progress.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_progress_tsx",
+      "target": "lib_utils_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/ui/progress.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_ui_progress_tsx",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/elevenlabs.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_elevenlabs_ts",
+      "target": "lib_elevenlabs_texttospeech"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/runware.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_runware_ts",
+      "target": "lib_runware_runwarerequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/runware.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_runware_ts",
+      "target": "lib_runware_transcribevideo"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/runware.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_runware_ts",
+      "target": "lib_runware_captionimage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/runware.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_runware_ts",
+      "target": "lib_runware_generatevideo"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/runware.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_runware_transcribevideo",
+      "target": "lib_runware_runwarerequest"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/runware.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_runware_captionimage",
+      "target": "lib_runware_runwarerequest"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/runware.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_runware_generatevideo",
+      "target": "lib_runware_runwarerequest"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/utils.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_utils_ts",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/utils.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_utils_ts",
+      "target": "lib_utils_formattokens"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/agents/lawyer.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_agents_lawyer_ts",
+      "target": "agents_lawyer_runlawyeragent"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/agents/planner.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_agents_planner_ts",
+      "target": "lib_agents_lawyer_ts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/agents/planner.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_agents_planner_ts",
+      "target": "agents_planner_runplanneragent"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/supabase/client.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase_client_ts",
+      "target": "supabase_client_createclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/supabase/server.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase_server_ts",
+      "target": "supabase_server_createclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/supabase/server.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase_server_ts",
+      "target": "supabase_server_createserviceclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "setup_md",
+      "target": "helmet_io_setup_helmet_io_setup_guide"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_helmet_io_setup_guide",
+      "target": "helmet_io_setup_prerequisites"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_helmet_io_setup_guide",
+      "target": "helmet_io_setup_step_1_supabase_setup"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_helmet_io_setup_guide",
+      "target": "helmet_io_setup_step_2_elevenlabs_voice_id"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_helmet_io_setup_guide",
+      "target": "helmet_io_setup_step_3_create_env_local"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_helmet_io_setup_guide",
+      "target": "helmet_io_setup_step_4_install_run"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L74",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_helmet_io_setup_guide",
+      "target": "helmet_io_setup_token_system"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L83",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_helmet_io_setup_guide",
+      "target": "helmet_io_setup_architecture"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L101",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_helmet_io_setup_guide",
+      "target": "helmet_io_setup_rules_graph"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L44",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_step_3_create_env_local",
+      "target": "helmet_io_setup_codeblock_1"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L49",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_step_3_create_env_local",
+      "target": "helmet_io_setup_codeblock_2"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L64",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_step_4_install_run",
+      "target": "helmet_io_setup_codeblock_3"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SETUP.md",
+      "source_location": "L85",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "helmet_io_setup_architecture",
+      "target": "helmet_io_setup_codeblock_4"
+    }
+  ],
+  "hyperedges": []
+}

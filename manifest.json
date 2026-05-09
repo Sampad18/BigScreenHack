@@ -1,0 +1,146 @@
+{
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\middleware.ts": {
+    "mtime": 1778330412.2948143,
+    "hash": "567cd8f81f4a6ccd23abbe1cf208924a"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\next-env.d.ts": {
+    "mtime": 1778330838.7109127,
+    "hash": "187b4b5b507c358a018aeeadd81abe57"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\next.config.js": {
+    "mtime": 1778330821.1797757,
+    "hash": "1671b38415fbe3c9afd911b2a957a190"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\postcss.config.js": {
+    "mtime": 1778329578.4658823,
+    "hash": "f25138ae21a7fea13cb86a59efcbdfde"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\tailwind.config.ts": {
+    "mtime": 1778329574.8699632,
+    "hash": "dc651c733f28ec0a07502253a7f62f38"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\layout.tsx": {
+    "mtime": 1778329826.1525085,
+    "hash": "dc1b2c5e816971698376301a4fc7675c"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\page.tsx": {
+    "mtime": 1778329830.567109,
+    "hash": "858dc5ee7ba58cc48463c8a8468f26c0"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\api\\audio\\route.ts": {
+    "mtime": 1778330073.7098088,
+    "hash": "bcc79f81a115c4f3dbf523a1728bc5e8"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\api\\generate-video\\route.ts": {
+    "mtime": 1778330367.7171893,
+    "hash": "1a62474db534148094a815200ba12bd2"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\api\\lawyer\\route.ts": {
+    "mtime": 1778330417.1600862,
+    "hash": "488ebb3f14cd2eb8bd3faf6b8167fc73"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\api\\planner\\route.ts": {
+    "mtime": 1778330068.1577425,
+    "hash": "c66e1e2ee7307eda61ceb825da63c5c6"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\api\\profile\\route.ts": {
+    "mtime": 1778330086.704039,
+    "hash": "f6d380bae2181080934bb5a793619b02"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\api\\transcribe\\route.ts": {
+    "mtime": 1778330052.7255988,
+    "hash": "a115cea15de4de66eea80b7041a719d1"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\auth\\callback\\route.ts": {
+    "mtime": 1778329865.0881617,
+    "hash": "d6ca43b6c01677a83bcae521b3c7d9e4"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\dashboard\\page.tsx": {
+    "mtime": 1778329874.9785006,
+    "hash": "eb158e82fe53b29e13768e758c0d862d"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\login\\page.tsx": {
+    "mtime": 1778333891.781889,
+    "hash": "9d7b45d8fcfb77e4521fa2a93550890c"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\app\\signup\\page.tsx": {
+    "mtime": 1778333897.007206,
+    "hash": "babd3b5d486a8fd84e8eac216c62297e"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\components\\dashboard\\DashboardClient.tsx": {
+    "mtime": 1778329914.0632265,
+    "hash": "25f9b3bf173b787fb638d97c3ba6a3eb"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\components\\dashboard\\GenerateDialog.tsx": {
+    "mtime": 1778329990.8018737,
+    "hash": "043674fa7136e6728ea52c91ae7b1c3d"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\components\\dashboard\\UploadDialog.tsx": {
+    "mtime": 1778330043.5201774,
+    "hash": "31660bab8794d7ed10e787018e6cb4f4"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\components\\ui\\badge.tsx": {
+    "mtime": 1778329808.4447236,
+    "hash": "831bb15a0c533dfb59c663c7e2501ac3"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\components\\ui\\button.tsx": {
+    "mtime": 1778329780.7060513,
+    "hash": "8e539a7f65e732e23ad708eb4bd6ce63"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\components\\ui\\dialog.tsx": {
+    "mtime": 1778329800.3302114,
+    "hash": "51e898449e849f7808afbd52fdf62e24"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\components\\ui\\input.tsx": {
+    "mtime": 1778329783.110612,
+    "hash": "03a334b49550d2ab0acd78b14494f930"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\components\\ui\\label.tsx": {
+    "mtime": 1778329791.516099,
+    "hash": "4ad1e93cae909bb956475ed05463d9c8"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\components\\ui\\progress.tsx": {
+    "mtime": 1778329811.3624198,
+    "hash": "33142d9b900051266a0a180f4bcbca48"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\lib\\elevenlabs.ts": {
+    "mtime": 1778329740.5458798,
+    "hash": "8266c782f9b9f8fcc278284f86ca204c"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\lib\\runware.ts": {
+    "mtime": 1778329736.88759,
+    "hash": "dcd67f65b066806ac7990d78138b4a7f"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\lib\\utils.ts": {
+    "mtime": 1778329713.954252,
+    "hash": "825746389052296022a3b8a52f4b8542"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\lib\\agents\\lawyer.ts": {
+    "mtime": 1778329757.5471785,
+    "hash": "206c38a7a673cf0b50cb300bcd983a6e"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\lib\\agents\\planner.ts": {
+    "mtime": 1778329767.7243843,
+    "hash": "f3fb87a6095313905c90e425957e9dc7"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\lib\\supabase\\client.ts": {
+    "mtime": 1778329715.356118,
+    "hash": "5453d99289cf630306e5030428c0fc33"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\lib\\supabase\\server.ts": {
+    "mtime": 1778330405.9866412,
+    "hash": "358adab6e39c020e54d6e799211b1f6b"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\supabase\\schema.sql": {
+    "mtime": 1778329698.4296906,
+    "hash": "a18b150fa1e21d66c3b9c506d0d34353"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\Prompt.txt": {
+    "mtime": 1778328715.3075087,
+    "hash": "79aa5d3144d54aa08409e7d67f1cd30f"
+  },
+  "D:\\Hackathon\\Big Screen Hack\\helmet-io\\SETUP.md": {
+    "mtime": 1778330107.8980784,
+    "hash": "3b405929cf51712495fc7de1d8a696f9"
+  }
+}
