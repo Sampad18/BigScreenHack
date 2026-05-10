@@ -132,7 +132,7 @@ export function UploadDialog({
         const urlErr = await urlRes.json();
         throw new Error("Upload URL error: " + (urlErr.error ?? urlRes.status));
       }
-      const { signedUrl, token, path, publicUrl } = await urlRes.json();
+      const { signedUrl, token, path, publicUrl, accessUrl } = await urlRes.json();
 
       // Upload directly to Supabase using signed URL
       const { error: uploadErr } = await supabase.storage
@@ -156,7 +156,7 @@ export function UploadDialog({
       const transcribeRes = await fetch("/api/transcribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ videoUrl: publicUrl, generationId: gen.id }),
+        body: JSON.stringify({ videoUrl: accessUrl ?? publicUrl, generationId: gen.id }),
       });
       const transcribeData = await transcribeRes.json();
       if (!transcribeRes.ok) throw new Error(transcribeData.error ?? "Video analysis failed");
