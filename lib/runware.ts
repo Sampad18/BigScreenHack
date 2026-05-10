@@ -139,42 +139,81 @@ export async function transcribeVideoUrl(videoUrl: string): Promise<string> {
   });
 }
 
-// Analyze video content using Runware's memories-video-captioning model.
-// Uses async submit + REST polling, designed to complete within Vercel's 60s limit.
+// Analyze video content using Runware's memories:2@1 model via WebSocket.
+// Result arrives directly over the socket — no polling needed, fits within 55s.
 export async function captionVideoContent(videoUrl: string): Promise<string> {
+  const apiKey = process.env.RUNWARE_API_KEY!;
+  const WS_URL = "wss://ws-api.runware.ai/v1";
   const taskUUID = uuidv4();
-  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-  const submitData = await runwareRequest([{
-    taskType: "caption",
-    taskUUID,
-    model: "memories:2@1",
-    inputs: { video: videoUrl },
-    deliveryMethod: "async",
-  }]);
-  console.log("Video caption submitted:", JSON.stringify(submitData));
+  return new Promise<string>((resolve, reject) => {
+    const ws = new WebSocket(WS_URL, { perMessageDeflate: false } as WebSocket.ClientOptions);
+    let settled = false;
 
-  // Poll every 4s for up to 48s (12 polls) — fits within Vercel Hobby 60s limit
-  for (let i = 0; i < 12; i++) {
-    await sleep(4000);
-    try {
-      const pollData = await runwareRequest([{ taskType: "getResponse", taskUUID }]);
-      console.log(`Caption poll ${i + 1}:`, JSON.stringify(pollData));
-      if (Array.isArray(pollData) && pollData.length > 0) {
-        const result = pollData[0] as Record<string, unknown>;
-        if (result.text) return result.text as string;
-        if (result.status === "success") return (result.text as string) ?? "";
-        if (result.status === "failed" || result.error) {
-          throw new Error((result.errorMessage as string) ?? "Video captioning failed on Runware");
+    const done = (text: string) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      try { ws.close(); } catch {}
+      resolve(text);
+    };
+
+    const fail = (err: Error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      try { ws.close(); } catch {}
+      reject(err);
+    };
+
+    const timeout = setTimeout(() => fail(new Error("Video caption timeout (55s) — try a shorter video")), 55_000);
+
+    const send = (payload: object[]) => {
+      if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(payload));
+    };
+
+    ws.on("open", () => {
+      send([{ taskType: "authentication", apiKey }]);
+    });
+
+    ws.on("message", (raw: WebSocket.RawData) => {
+      let items: unknown[];
+      try {
+        const parsed = JSON.parse(raw.toString());
+        items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.data) ? parsed.data : []);
+      } catch { return; }
+
+      for (const item of items) {
+        const obj = item as Record<string, unknown>;
+
+        if (obj.error || (Array.isArray(obj.errors) && (obj.errors as unknown[]).length)) {
+          const msg = (obj.errorMessage as string) ?? JSON.stringify(obj.errors ?? obj.error);
+          fail(new Error(`Runware caption error: ${msg}`));
+          return;
+        }
+
+        if (obj.taskType === "authentication" && !obj.error) {
+          send([{
+            taskType: "caption",
+            taskUUID,
+            model: "memories:1@1",
+            inputVideo: videoUrl,
+          }]);
+          continue;
+        }
+
+        if (obj.taskUUID === taskUUID) {
+          // Check all plausible field names the API might use
+          const text = (obj.text ?? obj.caption ?? obj.content ?? obj.description ?? "") as string;
+          done(text);
+          return;
         }
       }
-    } catch (e) {
-      if (e instanceof Error && e.message.includes("captioning failed")) throw e;
-      console.warn(`Caption poll ${i + 1} failed:`, e);
-    }
-  }
+    });
 
-  throw new Error("Video caption timed out — try a shorter video");
+    ws.on("error", (err: Error) => fail(new Error(`Runware WS error: ${err.message}`)));
+    ws.on("close", (code: number) => { if (!settled) fail(new Error(`Runware WS closed (${code})`)); });
+  });
 }
 
 export interface VideoGenParams {
