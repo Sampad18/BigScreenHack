@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { analyzeVideoUrl } from "@/lib/runware";
+import { transcribeVideoUrl } from "@/lib/runware";
 
 export const maxDuration = 200;
 
@@ -15,13 +15,13 @@ export async function POST(req: NextRequest) {
 
     let combinedText = text ?? "";
 
-    // Video-to-text analysis using Runware's video understanding model
+    // Transcribe video audio using Runware Whisper via WebSocket
     if (videoUrl) {
-      const analysis = await analyzeVideoUrl(videoUrl);
-      if (!analysis) {
-        throw new Error("Runware could not analyze the video. Please try again.");
+      const transcript = await transcribeVideoUrl(videoUrl);
+      if (!transcript) {
+        throw new Error("Runware could not transcribe the video audio. Ensure the video has speech content and try again.");
       }
-      combinedText = `Video content analysis:\n\n${analysis}`;
+      combinedText = `Video audio transcript:\n\n${transcript}`;
     }
 
     if (generationId) {

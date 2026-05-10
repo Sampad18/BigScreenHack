@@ -65,14 +65,78 @@ export async function transcribeVideo(videoUrl: string): Promise<string> {
   throw new Error("Transcription timeout after 3 minutes");
 }
 
-// Analyze a video URL using Runware's video-to-text model.
-export async function analyzeVideoUrl(videoUrl: string): Promise<string> {
-  const runware = new RunwareServer({ apiKey: process.env.RUNWARE_API_KEY! });
-  const result = await runware.requestImageToText({
-    inputs: { video: videoUrl },
+// Transcribe a video's audio via Runware WebSocket (Whisper).
+export async function transcribeVideoUrl(videoUrl: string): Promise<string> {
+  const apiKey = process.env.RUNWARE_API_KEY!;
+  const WS_URL = "wss://ws-api.runware.ai/v1";
+  const taskUUID = uuidv4();
+
+  return new Promise<string>((resolve, reject) => {
+    const ws = new WebSocket(WS_URL, { perMessageDeflate: false } as WebSocket.ClientOptions);
+    let settled = false;
+
+    const done = (text: string) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      try { ws.close(); } catch {}
+      resolve(text);
+    };
+
+    const fail = (err: Error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      try { ws.close(); } catch {}
+      reject(err);
+    };
+
+    const timeout = setTimeout(() => fail(new Error("Transcription timeout (120s)")), 120_000);
+
+    const send = (payload: object[]) => {
+      if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(payload));
+    };
+
+    ws.on("open", () => {
+      send([{ taskType: "authentication", apiKey }]);
+    });
+
+    ws.on("message", (raw: WebSocket.RawData) => {
+      let items: unknown[];
+      try {
+        const parsed = JSON.parse(raw.toString());
+        items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.data) ? parsed.data : []);
+      } catch { return; }
+
+      for (const item of items) {
+        const obj = item as Record<string, unknown>;
+
+        if (obj.error || (Array.isArray(obj.errors) && (obj.errors as unknown[]).length)) {
+          fail(new Error((obj.errorMessage as string) ?? JSON.stringify(obj.errors ?? obj.error)));
+          return;
+        }
+
+        if (obj.taskType === "authentication" && !obj.error) {
+          send([{
+            taskType: "audioTranscription",
+            taskUUID,
+            model: "openai:whisper-large-v3",
+            inputAudio: videoUrl,
+          }]);
+          continue;
+        }
+
+        if (obj.taskUUID === taskUUID) {
+          const text = (obj.text ?? obj.transcript ?? "") as string;
+          done(text);
+          return;
+        }
+      }
+    });
+
+    ws.on("error", (err: Error) => fail(new Error(`Runware WS error: ${err.message}`)));
+    ws.on("close", (code: number) => { if (!settled) fail(new Error(`Runware WS closed (${code})`)); });
   });
-  const r = result as unknown as { text?: string };
-  return r?.text ?? "";
 }
 
 export interface VideoGenParams {
