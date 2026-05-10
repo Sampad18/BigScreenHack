@@ -163,7 +163,7 @@ export function UploadDialog({
         body: JSON.stringify({ imageFrames: frames, generationId: gen.id }),
       });
       const transcribeData = await transcribeRes.json();
-      if (!transcribeRes.ok) throw new Error("Video analysis failed");
+      if (!transcribeRes.ok) throw new Error(transcribeData.error ?? "Video analysis failed");
       setTranscript(transcribeData.combinedText);
 
       // Lawyer check
