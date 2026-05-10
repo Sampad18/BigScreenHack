@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { HelmetLogo } from "@/components/HelmetLogo";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { Shield, Video, CheckCircle, Zap, Scale, Globe, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -11,7 +12,10 @@ export default async function Home() {
   if (user) redirect("/dashboard");
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Animated Background */}
+      <AnimatedBackground />
+      
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
