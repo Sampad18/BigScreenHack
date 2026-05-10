@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HelmetLogo } from "@/components/HelmetLogo";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { toast } from "sonner";
 
 export default function LoginPage() {
@@ -33,13 +34,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-white to-sky-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-sky-400/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl" />
-      
-      {/* Grid pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0ea5e910_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e910_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
+      {/* Animated Background */}
+      <AnimatedBackground />
 
       <div className="relative z-10 w-full max-w-md px-6">
         {/* Logo */}

@@ -5,6 +5,7 @@ import { Film, Upload, LogOut, Coins, Clock, CheckCircle, XCircle, Loader2, Play
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { HelmetLogo } from "@/components/HelmetLogo";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { GenerateDialog } from "./GenerateDialog";
 import { UploadDialog } from "./UploadDialog";
 import { VideoViewerDialog } from "./VideoViewerDialog";
@@ -84,7 +85,10 @@ export function DashboardClient({ profile, generations }: { profile: Profile; ge
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-background relative">
+      {/* Animated Background */}
+      <AnimatedBackground />
+      
       {/* Nav */}
       <nav className="border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
