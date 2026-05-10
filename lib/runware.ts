@@ -147,13 +147,18 @@ export async function analyzeVideoWithGemini(videoUrl: string): Promise<string> 
     taskType: "textInference",
     taskUUID,
     model: "google:gemini@3.1-flash-lite",
-    systemPrompt: "You are a video content compliance analyst. Describe everything visible in the video in thorough detail — all people, activities, objects, on-screen text, logos, scenes, and any content relevant to compliance review under EU AI Act, GDPR, copyright law, and content safety standards.",
-    messages: [{
-      role: "user",
-      content: "Analyze this video and provide a detailed description of all visual content for compliance review.",
-    }],
+    messages: [
+      {
+        role: "system",
+        content: "You are a video content compliance analyst. Describe everything visible in the video in thorough detail — all people, activities, objects, on-screen text, logos, scenes, and any content relevant to compliance review under EU AI Act, GDPR, copyright law, and content safety standards.",
+      },
+      {
+        role: "user",
+        content: "Analyze this video and provide a detailed description of all visual content for compliance review.",
+      },
+    ],
     inputs: { videos: [videoUrl] },
-    maxTokens: 1024,
+    settings: { maxTokens: 1024 },
     deliveryMethod: "sync",
   }]);
 
