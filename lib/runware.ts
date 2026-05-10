@@ -64,22 +64,87 @@ export async function transcribeVideo(videoUrl: string): Promise<string> {
   throw new Error("Transcription timeout after 3 minutes");
 }
 
-export async function captionImage(imageInput: string): Promise<string> {
-  // Runware expects raw base64, not a data URL — strip the prefix if present
-  const imageData = imageInput.startsWith("data:")
-    ? imageInput.split(",")[1]
-    : imageInput;
+// Caption multiple images via a single WebSocket connection (same protocol as video generation).
+// Returns one caption string per image in the same order.
+export async function captionImages(imageInputs: string[]): Promise<string[]> {
+  const apiKey = process.env.RUNWARE_API_KEY!;
+  const WS_URL = "wss://ws-api.runware.ai/v1";
 
-  const data = await runwareRequest([
-    {
-      taskType: "caption",
-      taskUUID: uuidv4(),
-      model: "runware:151@1",
-      inputImage: imageData,
-      prompt: "This is a frame from a video. Describe what you see in detail: people, objects, text, brands, activities, setting, and anything that could raise legal or compliance concerns.",
-    },
-  ]);
-  return data[0]?.text ?? data[0]?.caption ?? data[0]?.structuredData ?? "";
+  const tasks = imageInputs.map((input) => ({
+    uuid: uuidv4(),
+    imageData: input.startsWith("data:") ? input.split(",")[1] : input,
+  }));
+
+  return new Promise<string[]>((resolve, reject) => {
+    const ws = new WebSocket(WS_URL, { perMessageDeflate: false } as WebSocket.ClientOptions);
+    let settled = false;
+    const results = new Map<string, string>();
+
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      try { ws.close(); } catch {}
+      resolve(tasks.map((t) => results.get(t.uuid) ?? ""));
+    };
+
+    const fail = (err: Error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeout);
+      try { ws.close(); } catch {}
+      reject(err);
+    };
+
+    const timeout = setTimeout(() => fail(new Error("Runware caption timeout (30s)")), 30_000);
+
+    const send = (payload: object[]) => {
+      if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(payload));
+    };
+
+    ws.on("open", () => {
+      send([{ taskType: "authentication", apiKey }]);
+    });
+
+    ws.on("message", (raw: WebSocket.RawData) => {
+      let items: unknown[];
+      try {
+        const parsed = JSON.parse(raw.toString());
+        items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.data) ? parsed.data : []);
+      } catch { return; }
+
+      for (const item of items) {
+        const obj = item as Record<string, unknown>;
+
+        if (obj.error || (Array.isArray(obj.errors) && (obj.errors as unknown[]).length)) {
+          fail(new Error((obj.errorMessage as string) ?? JSON.stringify(obj.errors ?? obj.error)));
+          return;
+        }
+
+        if (obj.taskType === "authentication" && !obj.error) {
+          // Submit all caption tasks at once
+          send(tasks.map((t) => ({
+            taskType: "imageCaption",
+            taskUUID: t.uuid,
+            inputImage: t.imageData,
+            includeCaption: true,
+          })));
+          continue;
+        }
+
+        // Collect caption results by taskUUID
+        const matchedTask = tasks.find((t) => t.uuid === obj.taskUUID);
+        if (matchedTask) {
+          const caption = (obj.caption ?? obj.text ?? obj.structuredData ?? "") as string;
+          results.set(matchedTask.uuid, caption);
+          if (results.size === tasks.length) finish();
+        }
+      }
+    });
+
+    ws.on("error", (err: Error) => fail(new Error(`Runware WS error: ${err.message}`)));
+    ws.on("close", (code: number) => { if (!settled) fail(new Error(`Runware WS closed (${code})`)); });
+  });
 }
 
 export interface VideoGenParams {
