@@ -139,81 +139,35 @@ export async function transcribeVideoUrl(videoUrl: string): Promise<string> {
   });
 }
 
-// Analyze video content using Runware's memories:2@1 model via WebSocket.
-// Result arrives directly over the socket — no polling needed, fits within 55s.
-export async function captionVideoContent(videoUrl: string): Promise<string> {
-  const apiKey = process.env.RUNWARE_API_KEY!;
-  const WS_URL = "wss://ws-api.runware.ai/v1";
+// Submit a video caption job — returns taskUUID immediately (memories:1@1 is always async).
+export async function submitCaptionJob(videoUrl: string): Promise<string> {
   const taskUUID = uuidv4();
+  await runwareRequest([{
+    taskType: "caption",
+    taskUUID,
+    model: "memories:1@1",
+    inputs: { video: videoUrl },
+  }]);
+  return taskUUID;
+}
 
-  return new Promise<string>((resolve, reject) => {
-    const ws = new WebSocket(WS_URL, { perMessageDeflate: false } as WebSocket.ClientOptions);
-    let settled = false;
+// Poll for a submitted caption job — call from a client-side polling loop.
+export async function pollCaptionJob(taskUUID: string): Promise<{ status: "pending" | "completed" | "failed"; text?: string; error?: string }> {
+  let data: Record<string, unknown>[];
+  try {
+    data = await runwareRequest([{ taskType: "getResponse", taskUUID }]);
+  } catch {
+    return { status: "pending" };
+  }
 
-    const done = (text: string) => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timeout);
-      try { ws.close(); } catch {}
-      resolve(text);
-    };
+  if (!Array.isArray(data) || data.length === 0) return { status: "pending" };
 
-    const fail = (err: Error) => {
-      if (settled) return;
-      settled = true;
-      clearTimeout(timeout);
-      try { ws.close(); } catch {}
-      reject(err);
-    };
-
-    const timeout = setTimeout(() => fail(new Error("Video caption timeout (55s) — try a shorter video")), 55_000);
-
-    const send = (payload: object[]) => {
-      if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(payload));
-    };
-
-    ws.on("open", () => {
-      send([{ taskType: "authentication", apiKey }]);
-    });
-
-    ws.on("message", (raw: WebSocket.RawData) => {
-      let items: unknown[];
-      try {
-        const parsed = JSON.parse(raw.toString());
-        items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.data) ? parsed.data : []);
-      } catch { return; }
-
-      for (const item of items) {
-        const obj = item as Record<string, unknown>;
-
-        if (obj.error || (Array.isArray(obj.errors) && (obj.errors as unknown[]).length)) {
-          const msg = (obj.errorMessage as string) ?? JSON.stringify(obj.errors ?? obj.error);
-          fail(new Error(`Runware caption error: ${msg}`));
-          return;
-        }
-
-        if (obj.taskType === "authentication" && !obj.error) {
-          send([{
-            taskType: "caption",
-            taskUUID,
-            model: "memories:1@1",
-            inputVideo: videoUrl,
-          }]);
-          continue;
-        }
-
-        if (obj.taskUUID === taskUUID) {
-          // Check all plausible field names the API might use
-          const text = (obj.text ?? obj.caption ?? obj.content ?? obj.description ?? "") as string;
-          done(text);
-          return;
-        }
-      }
-    });
-
-    ws.on("error", (err: Error) => fail(new Error(`Runware WS error: ${err.message}`)));
-    ws.on("close", (code: number) => { if (!settled) fail(new Error(`Runware WS closed (${code})`)); });
-  });
+  const result = data[0] as Record<string, unknown>;
+  if (result.text) return { status: "completed", text: result.text as string };
+  if (result.status === "failed" || result.error) {
+    return { status: "failed", error: (result.errorMessage as string) ?? "Video captioning failed" };
+  }
+  return { status: "pending" };
 }
 
 export interface VideoGenParams {
