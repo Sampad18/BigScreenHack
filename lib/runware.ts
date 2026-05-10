@@ -139,6 +139,44 @@ export async function transcribeVideoUrl(videoUrl: string): Promise<string> {
   });
 }
 
+// Analyze video content using Runware's memories-video-captioning model.
+// Uses async submit + REST polling, designed to complete within Vercel's 60s limit.
+export async function captionVideoContent(videoUrl: string): Promise<string> {
+  const taskUUID = uuidv4();
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+  const submitData = await runwareRequest([{
+    taskType: "caption",
+    taskUUID,
+    model: "memories-video-captioning",
+    inputs: { video: videoUrl },
+    deliveryMethod: "async",
+  }]);
+  console.log("Video caption submitted:", JSON.stringify(submitData));
+
+  // Poll every 4s for up to 48s (12 polls) — fits within Vercel Hobby 60s limit
+  for (let i = 0; i < 12; i++) {
+    await sleep(4000);
+    try {
+      const pollData = await runwareRequest([{ taskType: "getResponse", taskUUID }]);
+      console.log(`Caption poll ${i + 1}:`, JSON.stringify(pollData));
+      if (Array.isArray(pollData) && pollData.length > 0) {
+        const result = pollData[0] as Record<string, unknown>;
+        if (result.text) return result.text as string;
+        if (result.status === "success") return (result.text as string) ?? "";
+        if (result.status === "failed" || result.error) {
+          throw new Error((result.errorMessage as string) ?? "Video captioning failed on Runware");
+        }
+      }
+    } catch (e) {
+      if (e instanceof Error && e.message.includes("captioning failed")) throw e;
+      console.warn(`Caption poll ${i + 1} failed:`, e);
+    }
+  }
+
+  throw new Error("Video caption timed out — try a shorter video");
+}
+
 export interface VideoGenParams {
   prompt: string;
   width?: number;

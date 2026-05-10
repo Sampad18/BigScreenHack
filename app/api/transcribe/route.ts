@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { transcribeVideoUrl } from "@/lib/runware";
+import { captionVideoContent } from "@/lib/runware";
 
-export const maxDuration = 200;
+export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,13 +15,12 @@ export async function POST(req: NextRequest) {
 
     let combinedText = text ?? "";
 
-    // Transcribe video audio using Runware Whisper via WebSocket
     if (videoUrl) {
-      const transcript = await transcribeVideoUrl(videoUrl);
-      if (!transcript) {
-        throw new Error("Runware could not transcribe the video audio. Ensure the video has speech content and try again.");
+      const caption = await captionVideoContent(videoUrl);
+      if (!caption) {
+        throw new Error("Runware could not analyze the video content. Ensure the video is accessible and try again.");
       }
-      combinedText = `Video audio transcript:\n\n${transcript}`;
+      combinedText = `Video content description:\n\n${caption}`;
     }
 
     if (generationId) {
