@@ -1,3 +1,4 @@
+import React from "react";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
@@ -17,11 +18,11 @@ export default async function GenerationPage({ params }: { params: { id: string 
 
   if (!gen) notFound();
 
-  const statusIcon = {
+  const statusIcon = ({
     completed: <CheckCircle className="w-5 h-5 text-emerald-400" />,
     failed: <XCircle className="w-5 h-5 text-red-400" />,
     rejected: <XCircle className="w-5 h-5 text-orange-400" />,
-  }[gen.status] ?? <Clock className="w-5 h-5 text-blue-400" />;
+  } as Record<string, React.ReactElement>)[gen.status] ?? <Clock className="w-5 h-5 text-blue-400" />;
 
   const violations = gen.lawyer_result?.violations ?? [];
 
