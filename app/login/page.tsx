@@ -2,11 +2,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Shield, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { HelmetLogo } from "@/components/HelmetLogo";
 import { toast } from "sonner";
 
 export default function LoginPage() {
@@ -32,28 +33,35 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center helmet-gradient relative overflow-hidden">
-      {/* Background grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-white to-sky-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-sky-400/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl" />
+      
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0ea5e910_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e910_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
       <div className="relative z-10 w-full max-w-md px-6">
         {/* Logo */}
         <div className="flex flex-col items-center mb-10">
-          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4 shield-pulse">
-            <Shield className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Helmet.io</h1>
-          <p className="text-zinc-400 mt-1 text-sm">AI-Compliant Video Generation</p>
+          <Link href="/" className="group">
+            <div className="w-20 h-20 relative mb-4">
+              <div className="absolute inset-0 bg-sky-400/20 rounded-full blur-xl group-hover:bg-sky-400/30 transition-colors" />
+              <HelmetLogo className="w-20 h-20 text-sky-600 relative z-10 drop-shadow-lg shield-pulse" />
+            </div>
+          </Link>
+          <h1 className="text-3xl font-bold text-foreground tracking-tight">Helmet.io</h1>
+          <p className="text-muted-foreground mt-1 text-sm">AI-Compliant Video Generation</p>
         </div>
 
         {/* Card */}
-        <div className="bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-2xl p-8 shadow-2xl">
-          <h2 className="text-xl font-semibold text-white mb-1">Sign in</h2>
-          <p className="text-zinc-400 text-sm mb-6">Enter your credentials to continue</p>
+        <div className="bg-card/80 backdrop-blur-xl border border-border rounded-2xl p-8 shadow-2xl shadow-sky-500/5">
+          <h2 className="text-2xl font-semibold text-foreground mb-1">Welcome back</h2>
+          <p className="text-muted-foreground text-sm mb-6">Sign in to your account to continue</p>
 
           <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-1.5">
-              <Label htmlFor="email">Email</Label>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-foreground">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -62,47 +70,60 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
                 autoComplete="email"
+                className="h-12 bg-background border-border focus:border-sky-500 focus:ring-sky-500"
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label htmlFor="password">Password</Label>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-foreground">Password</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={loading}
                   autoComplete="current-password"
-                  className="pr-10"
+                  className="h-12 pr-12 bg-background border-border focus:border-sky-500 focus:ring-sky-500"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
             </div>
 
-            <Button type="submit" className="w-full mt-2" disabled={loading} size="lg">
-              {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Signing in...</> : "Sign in"}
+            <Button 
+              type="submit" 
+              className="w-full h-12 mt-2 bg-sky-500 hover:bg-sky-600 text-white font-medium shadow-lg shadow-sky-500/25" 
+              disabled={loading}
+            >
+              {loading ? <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Signing in...</> : "Sign in"}
             </Button>
           </form>
 
-          <p className="text-center text-zinc-500 text-sm mt-6">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
-              Create one
-            </Link>
-          </p>
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">New to Helmet.io?</span>
+            </div>
+          </div>
+
+          <Link href="/signup" className="block">
+            <Button variant="outline" className="w-full h-12 border-2 border-border hover:bg-muted font-medium">
+              Create an account
+            </Button>
+          </Link>
         </div>
 
-        <p className="text-center text-zinc-600 text-xs mt-6">
-          By signing in, you agree to Helmet.io&apos;s Terms of Service
+        <p className="text-center text-muted-foreground text-xs mt-8">
+          By signing in, you agree to Helmet.io&apos;s Terms of Service and Privacy Policy
         </p>
       </div>
     </div>
