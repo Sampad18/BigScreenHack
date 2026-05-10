@@ -21,15 +21,14 @@ export async function POST(req: NextRequest) {
         (imageFrames as string[]).map((frame, i) =>
           captionImage(frame)
             .then((c) => (c ? `Frame ${i + 1}: ${c}` : null))
-            .catch(() => null)
+            .catch((err) => { console.error(`Frame ${i + 1} caption error:`, err); return null; })
         )
       );
       const valid = captions.filter(Boolean) as string[];
-      if (valid.length > 0) {
-        combinedText = `Video visual analysis (${valid.length} key frames):\n\n${valid.join("\n\n")}`;
-      } else {
-        combinedText = "Video content could not be analyzed visually.";
+      if (valid.length === 0) {
+        throw new Error("Runware frame captioning failed for all frames. Check your RUNWARE_API_KEY in Vercel environment variables.");
       }
+      combinedText = `Video visual analysis (${valid.length} key frames):\n\n${valid.join("\n\n")}`;
     }
 
     // Caption a single image (used by GenerateDialog for image input)
