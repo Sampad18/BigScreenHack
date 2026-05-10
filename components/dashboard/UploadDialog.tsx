@@ -152,7 +152,7 @@ export function UploadDialog({
 
       setStep("transcribing");
 
-      // Analyze video with Gemini 3.1 Flash Lite (sync, returns combinedText directly)
+      // Submit caption job (returns captionTaskUUID immediately)
       const transcribeRes = await fetch("/api/transcribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -160,10 +160,27 @@ export function UploadDialog({
       });
       const transcribeData = await transcribeRes.json();
       if (!transcribeRes.ok) throw new Error(transcribeData.error ?? "Video analysis failed");
-      setTranscript(transcribeData.combinedText);
+
+      // Poll for caption result (memories:1@1 is async, can take 60-180s)
+      let caption = "";
+      const { captionTaskUUID } = transcribeData;
+      for (let i = 0; i < 36; i++) {
+        await new Promise((r) => setTimeout(r, 5000));
+        const pollRes = await fetch(`/api/poll-caption?taskUUID=${captionTaskUUID}&generationId=${gen.id}`);
+        const pollData = await pollRes.json();
+        if (pollData.status === "completed" && pollData.text) {
+          caption = pollData.text;
+          break;
+        }
+        if (pollData.status === "failed") {
+          throw new Error(pollData.error ?? "Video captioning failed");
+        }
+      }
+      if (!caption) throw new Error("Video caption timed out after 3 minutes — try a shorter video");
+      setTranscript(caption);
 
       // Lawyer check
-      await runLawyerCheck(gen.id, transcribeData.combinedText);
+      await runLawyerCheck(gen.id, caption);
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : "Unexpected error");
       setStep("error");
