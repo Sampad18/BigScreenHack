@@ -9,7 +9,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        grotesk: ["var(--font-anton)", "sans-serif"],
+        condiment: ["var(--font-condiment)", "cursive"],
+      },
       colors: {
+        cream: "#EFF4FF",
+        neon: "#6FFF00",
+        space: "#010828",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },

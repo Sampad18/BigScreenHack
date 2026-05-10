@@ -44,28 +44,39 @@ export function DashboardClient({ profile, generations }: { profile: Profile; ge
 
   function statusBadge(status: string) {
     const map: Record<string, { label: string; color: string }> = {
-      completed: { label: "Completed", color: "text-emerald-400 bg-emerald-950 border-emerald-800" },
-      failed: { label: "Failed", color: "text-red-400 bg-red-950 border-red-800" },
-      rejected: { label: "Rejected", color: "text-orange-400 bg-orange-950 border-orange-800" },
-      processing: { label: "Processing", color: "text-blue-400 bg-blue-950 border-blue-800" },
-      generating: { label: "Generating", color: "text-violet-400 bg-violet-950 border-violet-800" },
+      completed: { label: "Completed", color: "text-[#6FFF00] bg-[#6FFF00]/10 border-[#6FFF00]/30" },
+      failed: { label: "Failed", color: "text-red-400 bg-red-950/50 border-red-800" },
+      rejected: { label: "Rejected", color: "text-orange-400 bg-orange-950/50 border-orange-800" },
+      processing: { label: "Processing", color: "text-[#EFF4FF]/70 bg-white/5 border-white/10" },
+      generating: { label: "Generating", color: "text-[#EFF4FF]/70 bg-white/5 border-white/10" },
     };
-    const s = map[status] ?? { label: status, color: "text-zinc-400 bg-zinc-800 border-zinc-700" };
-    return <span className={`text-xs px-2 py-0.5 rounded-full border ${s.color}`}>{s.label}</span>;
+    const s = map[status] ?? { label: status, color: "text-[#EFF4FF]/50 bg-white/5 border-white/10" };
+    return <span className={`text-xs px-2 py-0.5 rounded-full border font-mono uppercase tracking-wide ${s.color}`}>{s.label}</span>;
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen relative">
+      {/* Fixed video background */}
+      <video
+        className="fixed inset-0 w-full h-full object-cover -z-10"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_151551_992053d1-3d3e-4b8c-abac-45f22158f411.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+      <div className="fixed inset-0 bg-[#010828]/70 -z-10" />
+
       {/* Nav */}
-      <nav className="border-b border-zinc-800/50 bg-zinc-950/80 backdrop-blur-xl sticky top-0 z-40">
+      <nav className="border-b border-white/10 bg-[#010828]/60 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <Shield className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 liquid-glass rounded-lg flex items-center justify-center">
+              <Shield className="w-4 h-4 text-[#6FFF00]" />
             </div>
-            <span className="font-bold text-white text-lg">Helmet.io</span>
+            <span className="font-grotesk text-[#EFF4FF] text-lg uppercase tracking-widest">Helmet.io</span>
           </div>
-          <Button variant="ghost" size="sm" onClick={handleLogout} className="text-zinc-400 hover:text-red-400">
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="text-[#EFF4FF]/50 hover:text-red-400 font-mono uppercase tracking-wider text-xs">
             <LogOut className="w-4 h-4 mr-1.5" /> Sign out
           </Button>
         </div>
@@ -73,38 +84,38 @@ export function DashboardClient({ profile, generations }: { profile: Profile; ge
 
       <div className="max-w-6xl mx-auto px-6 py-10">
         {/* Profile card */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 mb-8">
-          <div className="flex items-start justify-between flex-wrap gap-4">
+        <div className="liquid-glass rounded-2xl p-6 mb-8">
+          <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center text-white text-xl font-bold">
+              <div className="w-14 h-14 liquid-glass rounded-xl flex items-center justify-center text-[#6FFF00] text-xl font-grotesk">
                 {profile.full_name?.charAt(0).toUpperCase() ?? "U"}
               </div>
               <div>
-                <h2 className="text-white font-semibold text-lg">{profile.full_name}</h2>
-                <p className="text-zinc-400 text-sm">{profile.email}</p>
+                <h2 className="text-[#EFF4FF] font-grotesk uppercase tracking-wide text-lg">{profile.full_name}</h2>
+                <p className="text-[#EFF4FF]/50 font-mono text-sm">{profile.email}</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 bg-zinc-800/60 border border-zinc-700/50 rounded-xl px-4 py-3">
-              <Coins className="w-5 h-5 text-amber-400" />
+            <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex-shrink-0">
+              <Coins className="w-5 h-5 text-[#6FFF00]" />
               <div>
-                <div className="text-white font-bold text-lg leading-none">{formatTokens(profile.tokens_remaining)}</div>
-                <div className="text-zinc-400 text-xs mt-0.5">tokens remaining</div>
+                <div className="text-[#EFF4FF] font-grotesk text-lg leading-none">{formatTokens(profile.tokens_remaining)}</div>
+                <div className="text-[#EFF4FF]/40 font-mono text-xs mt-0.5 uppercase tracking-wider">tokens remaining</div>
               </div>
               <div className="ml-2 w-24">
-                <div className="h-1.5 bg-zinc-700 rounded-full overflow-hidden">
+                <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full transition-all"
+                    className="h-full bg-[#6FFF00] rounded-full transition-all"
                     style={{ width: `${tokenPercentage}%` }}
                   />
                 </div>
-                <div className="text-zinc-500 text-[10px] mt-1">{tokenPercentage.toFixed(0)}% left</div>
+                <div className="text-[#EFF4FF]/30 font-mono text-[10px] mt-1">{tokenPercentage.toFixed(0)}% left</div>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 mt-4 text-zinc-400 text-xs">
-            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+          <div className="flex items-center gap-2 mt-4 text-[#EFF4FF]/40 font-mono text-xs">
+            <div className="w-1.5 h-1.5 bg-[#6FFF00] rounded-full" />
             Each action costs 50 tokens — you have {Math.floor(profile.tokens_remaining / 50)} actions remaining
           </div>
         </div>
@@ -112,39 +123,43 @@ export function DashboardClient({ profile, generations }: { profile: Profile; ge
         {/* Action cards */}
         <div className="grid md:grid-cols-2 gap-4 mb-10">
           {/* Generate Video */}
-          <div className="group bg-zinc-900 border border-zinc-800 hover:border-blue-800/60 rounded-2xl p-6 transition-all hover:shadow-xl hover:shadow-blue-950/30 cursor-pointer"
+          <div
+            className="group liquid-glass border border-white/10 hover:border-[#6FFF00]/30 rounded-2xl p-6 transition-all hover:bg-white/5 cursor-pointer"
             onClick={() => {
               if (profile.tokens_remaining < 50) { toast.error("Insufficient tokens"); return; }
               setGenerateOpen(true);
-            }}>
-            <div className="w-12 h-12 bg-blue-600/20 border border-blue-800/40 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600/30 transition-colors">
-              <Film className="w-6 h-6 text-blue-400" />
+            }}
+          >
+            <div className="w-12 h-12 bg-[#6FFF00]/10 border border-[#6FFF00]/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#6FFF00]/20 transition-colors">
+              <Film className="w-6 h-6 text-[#6FFF00]" />
             </div>
-            <h3 className="text-white font-semibold text-lg mb-1">Generate Video</h3>
-            <p className="text-zinc-400 text-sm leading-relaxed">
+            <h3 className="text-[#EFF4FF] font-grotesk uppercase tracking-wide text-lg mb-1">Generate Video</h3>
+            <p className="text-[#EFF4FF]/50 font-mono text-sm leading-relaxed">
               Create a video from text description or image. Our AI agents will ensure it&apos;s legally compliant before generation.
             </p>
             <div className="mt-4 flex items-center gap-2">
-              <span className="text-xs text-amber-400 bg-amber-950/50 border border-amber-800/40 px-2 py-0.5 rounded-full">50 tokens / check</span>
-              <span className="text-xs text-blue-400 bg-blue-950/50 border border-blue-800/40 px-2 py-0.5 rounded-full">50 tokens / generation</span>
+              <span className="text-xs text-[#6FFF00]/70 bg-[#6FFF00]/10 border border-[#6FFF00]/20 px-2 py-0.5 rounded-full font-mono">50 tokens / check</span>
+              <span className="text-xs text-[#6FFF00]/70 bg-[#6FFF00]/10 border border-[#6FFF00]/20 px-2 py-0.5 rounded-full font-mono">50 tokens / gen</span>
             </div>
           </div>
 
           {/* Upload & Check */}
-          <div className="group bg-zinc-900 border border-zinc-800 hover:border-violet-800/60 rounded-2xl p-6 transition-all hover:shadow-xl hover:shadow-violet-950/30 cursor-pointer"
+          <div
+            className="group liquid-glass border border-white/10 hover:border-[#6FFF00]/30 rounded-2xl p-6 transition-all hover:bg-white/5 cursor-pointer"
             onClick={() => {
               if (profile.tokens_remaining < 50) { toast.error("Insufficient tokens"); return; }
               setUploadOpen(true);
-            }}>
-            <div className="w-12 h-12 bg-violet-600/20 border border-violet-800/40 rounded-xl flex items-center justify-center mb-4 group-hover:bg-violet-600/30 transition-colors">
-              <Upload className="w-6 h-6 text-violet-400" />
+            }}
+          >
+            <div className="w-12 h-12 bg-[#6FFF00]/10 border border-[#6FFF00]/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#6FFF00]/20 transition-colors">
+              <Upload className="w-6 h-6 text-[#6FFF00]" />
             </div>
-            <h3 className="text-white font-semibold text-lg mb-1">Check Uploaded Video</h3>
-            <p className="text-zinc-400 text-sm leading-relaxed">
+            <h3 className="text-[#EFF4FF] font-grotesk uppercase tracking-wide text-lg mb-1">Check Uploaded Video</h3>
+            <p className="text-[#EFF4FF]/50 font-mono text-sm leading-relaxed">
               Upload an existing video to check it against EU and international laws. Get a detailed compliance report.
             </p>
             <div className="mt-4 flex items-center gap-2">
-              <span className="text-xs text-amber-400 bg-amber-950/50 border border-amber-800/40 px-2 py-0.5 rounded-full">50 tokens / check</span>
+              <span className="text-xs text-[#6FFF00]/70 bg-[#6FFF00]/10 border border-[#6FFF00]/20 px-2 py-0.5 rounded-full font-mono">50 tokens / check</span>
             </div>
           </div>
         </div>
@@ -152,32 +167,32 @@ export function DashboardClient({ profile, generations }: { profile: Profile; ge
         {/* Recent generations */}
         {generations.length > 0 && (
           <div>
-            <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-zinc-400" /> Recent Activity
+            <h3 className="text-[#EFF4FF] font-grotesk uppercase tracking-widest text-sm mb-4 flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#6FFF00]" /> Recent Activity
             </h3>
             <div className="space-y-2">
               {generations.map((g) => (
-                <div key={g.id} className="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 flex items-center justify-between gap-4">
+                <div key={g.id} className="liquid-glass border border-white/10 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center flex-shrink-0">
-                      {g.status === "completed" ? <CheckCircle className="w-4 h-4 text-emerald-400" /> :
-                       g.status === "failed" ? <XCircle className="w-4 h-4 text-red-400" /> :
-                       <Loader2 className="w-4 h-4 text-blue-400 animate-spin" />}
+                    <div className="w-8 h-8 bg-white/5 rounded-lg flex items-center justify-center flex-shrink-0">
+                      {g.status === "completed" ? <CheckCircle className="w-4 h-4 text-[#6FFF00]" /> :
+                       g.status === "failed" || g.status === "rejected" ? <XCircle className="w-4 h-4 text-red-400" /> :
+                       <XCircle className="w-4 h-4 text-[#EFF4FF]/20" />}
                     </div>
                     <div className="min-w-0">
-                      <div className="text-sm text-zinc-200 font-medium capitalize">
+                      <div className="text-sm text-[#EFF4FF]/80 font-mono uppercase tracking-wide capitalize">
                         {g.input_type === "video" ? "Video Check" : "Video Generation"}
                       </div>
-                      <div className="text-xs text-zinc-500">{new Date(g.created_at).toLocaleDateString("en-GB")}</div>
+                      <div className="text-xs text-[#EFF4FF]/30 font-mono">{new Date(g.created_at).toLocaleDateString("en-GB")}</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0">
                     {statusBadge(g.status)}
-                    <span className="text-xs text-zinc-500">{g.tokens_spent} tokens</span>
+                    <span className="text-xs text-[#EFF4FF]/30 font-mono">{g.tokens_spent} tokens</span>
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="h-7 px-2"
+                      className="h-7 px-2 text-[#EFF4FF]/50 hover:text-[#6FFF00]"
                       onClick={() => setViewerId(g.id)}
                     >
                       <Play className="w-3 h-3 mr-1" /> View

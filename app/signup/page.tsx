@@ -38,30 +38,39 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center helmet-gradient relative overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20" />
+    <div className="min-h-screen flex items-center justify-center md:justify-start relative overflow-hidden bg-[#010828]">
+      {/* Video background */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_045634_e1c98c76-1265-4f5c-882a-4276f2080894.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#010828]/60 via-[#010828]/50 to-[#010828]/70" />
 
-      <div className="relative z-10 w-full max-w-md px-6">
+      <div className="relative z-10 w-full max-w-md px-5 py-10 mx-auto md:mx-0 md:ml-16 lg:ml-32">
         <div className="flex flex-col items-center mb-10">
-          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4 shield-pulse">
-            <Shield className="w-8 h-8 text-white" />
+          <div className="w-16 h-16 liquid-glass rounded-2xl flex items-center justify-center mb-5 shield-pulse">
+            <Shield className="w-8 h-8 text-[#6FFF00]" />
           </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Helmet.io</h1>
-          <p className="text-zinc-400 mt-1 text-sm">AI-Compliant Video Generation</p>
+          <h1 className="font-grotesk text-[#EFF4FF] text-4xl uppercase tracking-tight">Helmet.io</h1>
+          <p className="font-mono text-[#6FFF00] mt-1 text-sm tracking-wide opacity-80">So that you dont crash hard on your ai journey</p>
         </div>
 
-        <div className="bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-2xl p-8 shadow-2xl">
-          <h2 className="text-xl font-semibold text-white mb-1">Create account</h2>
-          <p className="text-zinc-400 text-sm mb-2">Join Helmet.io and get 10,000 tokens free</p>
+        <div className="liquid-glass rounded-2xl p-8">
+          <h2 className="font-grotesk text-[#EFF4FF] text-xl uppercase tracking-wide mb-1">Create account</h2>
+          <p className="text-[#EFF4FF]/50 font-mono text-xs uppercase tracking-wider mb-2">Join Helmet.io and get 10,000 tokens free</p>
 
-          <div className="flex items-center gap-2 bg-blue-950/50 border border-blue-900/50 rounded-lg px-3 py-2 mb-6">
-            <CheckCircle className="w-4 h-4 text-blue-400 flex-shrink-0" />
-            <span className="text-blue-300 text-xs">10,000 tokens included on signup (200 generations)</span>
+          <div className="flex items-center gap-2 bg-[#6FFF00]/10 border border-[#6FFF00]/20 rounded-lg px-3 py-2 mb-6">
+            <CheckCircle className="w-4 h-4 text-[#6FFF00] flex-shrink-0" />
+            <span className="text-[#6FFF00]/80 font-mono text-xs">10,000 tokens included on signup (200 generations)</span>
           </div>
 
           <form onSubmit={handleSignup} className="space-y-4">
             <div className="space-y-1.5">
-              <Label htmlFor="name">Full name</Label>
+              <Label htmlFor="name" className="text-[#EFF4FF]/70 font-mono text-xs uppercase tracking-wider">Full name</Label>
               <Input
                 id="name"
                 type="text"
@@ -70,11 +79,12 @@ export default function SignupPage() {
                 onChange={(e) => setFullName(e.target.value)}
                 disabled={loading}
                 autoComplete="name"
+                className="bg-white/5 border-white/10 text-[#EFF4FF] placeholder:text-[#EFF4FF]/30 focus:ring-[#6FFF00]/40 focus:border-[#6FFF00]/40"
               />
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-[#EFF4FF]/70 font-mono text-xs uppercase tracking-wider">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -83,11 +93,12 @@ export default function SignupPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
                 autoComplete="email"
+                className="bg-white/5 border-white/10 text-[#EFF4FF] placeholder:text-[#EFF4FF]/30 focus:ring-[#6FFF00]/40 focus:border-[#6FFF00]/40"
               />
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-[#EFF4FF]/70 font-mono text-xs uppercase tracking-wider">Password</Label>
               <div className="relative">
                 <Input
                   id="password"
@@ -97,26 +108,26 @@ export default function SignupPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={loading}
                   autoComplete="new-password"
-                  className="pr-10"
+                  className="pr-10 bg-white/5 border-white/10 text-[#EFF4FF] placeholder:text-[#EFF4FF]/30 focus:ring-[#6FFF00]/40 focus:border-[#6FFF00]/40"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#EFF4FF]/40 hover:text-[#EFF4FF] transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            <Button type="submit" className="w-full mt-2" disabled={loading} size="lg">
+            <Button type="submit" className="w-full mt-2 bg-[#6FFF00] text-[#010828] hover:bg-[#6FFF00]/90 font-grotesk uppercase tracking-widest" disabled={loading} size="lg">
               {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Creating account...</> : "Create account"}
             </Button>
           </form>
 
-          <p className="text-center text-zinc-500 text-sm mt-6">
+          <p className="text-center text-[#EFF4FF]/40 font-mono text-xs uppercase tracking-wider mt-6">
             Already have an account?{" "}
-            <Link href="/login" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
+            <Link href="/login" className="text-[#6FFF00] hover:text-[#6FFF00]/80 transition-colors">
               Sign in
             </Link>
           </p>

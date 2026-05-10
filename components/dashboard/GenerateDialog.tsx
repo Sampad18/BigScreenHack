@@ -144,7 +144,6 @@ export function GenerateDialog({
     if (result.isCompliant) {
       setIsCompliant(true);
       setStatusMsg("Content is compliant! Starting video generation...");
-      // Describe the video in audio (non-blocking)
       fetch("/api/audio", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -195,7 +194,6 @@ export function GenerateDialog({
 
   async function handleReject() {
     if (!generationId || !plannerResult) return;
-    // Re-run lawyer check on modified prompt to loop
     toast.info("Starting another compliance loop...");
     await runLawyerCheck(generationId, plannerResult.modifiedPrompt, loopCount + 1);
   }
@@ -230,17 +228,17 @@ export function GenerateDialog({
       CRITICAL: "text-red-400 bg-red-950/50 border-red-800",
       HIGH: "text-orange-400 bg-orange-950/50 border-orange-800",
       MEDIUM: "text-yellow-400 bg-yellow-950/50 border-yellow-800",
-      LOW: "text-blue-400 bg-blue-950/50 border-blue-800",
+      LOW: "text-[#6FFF00] bg-[#6FFF00]/10 border-[#6FFF00]/30",
     };
-    return map[s] ?? "text-zinc-400 bg-zinc-800 border-zinc-700";
+    return map[s] ?? "text-[#EFF4FF]/60 bg-white/5 border-white/10";
   }
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Film className="w-5 h-5 text-blue-400" /> Generate Compliant Video
+          <DialogTitle className="flex items-center gap-2 font-grotesk uppercase tracking-wide">
+            <Film className="w-5 h-5 text-[#6FFF00]" /> Generate Compliant Video
           </DialogTitle>
           <DialogDescription>
             Describe your video — our agents will ensure it meets all legal requirements.
@@ -253,8 +251,8 @@ export function GenerateDialog({
             {["Analyzing", "Legal Check", "Modifying", "Review", "Generating"].map((label, i) => (
               <div key={label} className="flex items-center gap-1 flex-1">
                 <div className={`h-1 flex-1 rounded-full transition-all ${
-                  i + 1 <= currentStepIdx - 1 ? "bg-blue-500" :
-                  i + 1 === currentStepIdx - 1 ? "bg-blue-500" : "bg-zinc-700"
+                  i + 1 <= currentStepIdx - 1 ? "bg-[#6FFF00]" :
+                  i + 1 === currentStepIdx - 1 ? "bg-[#6FFF00]" : "bg-white/10"
                 }`} />
               </div>
             ))}
@@ -265,38 +263,38 @@ export function GenerateDialog({
         {step === "input" && (
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">Video description *</label>
+              <label className="block text-sm font-mono uppercase tracking-wider text-[#EFF4FF]/70 mb-2">Video description *</label>
               <textarea
-                className="w-full h-32 bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition-all"
+                className="w-full h-32 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-[#EFF4FF] placeholder:text-[#EFF4FF]/30 focus:outline-none focus:ring-2 focus:ring-[#6FFF00]/40 resize-none transition-all"
                 placeholder="Describe the video you want to create. Be specific about scenes, characters, tone, and style..."
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
               />
-              <p className="text-xs text-zinc-500 mt-1">{prompt.length} characters</p>
+              <p className="text-xs text-[#EFF4FF]/30 mt-1 font-mono">{prompt.length} characters</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">Reference image (optional)</label>
+              <label className="block text-sm font-mono uppercase tracking-wider text-[#EFF4FF]/70 mb-2">Reference image (optional)</label>
               {imagePreview ? (
                 <div className="relative inline-block">
-                  <img src={imagePreview} alt="Preview" className="h-32 rounded-lg border border-zinc-700 object-cover" />
+                  <img src={imagePreview} alt="Preview" className="h-32 rounded-lg border border-white/10 object-cover" />
                   <button
                     onClick={() => { setImageFile(null); setImagePreview(null); }}
                     className="absolute -top-2 -right-2 w-5 h-5 bg-red-600 rounded-full flex items-center justify-center text-white"
                   ><X className="w-3 h-3" /></button>
                 </div>
               ) : (
-                <label className="flex items-center gap-3 border-2 border-dashed border-zinc-700 hover:border-zinc-500 rounded-lg px-4 py-4 cursor-pointer transition-colors">
-                  <ImageIcon className="w-5 h-5 text-zinc-500" />
-                  <span className="text-sm text-zinc-400">Click to upload image (JPG, PNG, WebP)</span>
+                <label className="flex items-center gap-3 border-2 border-dashed border-white/10 hover:border-[#6FFF00]/40 rounded-lg px-4 py-4 cursor-pointer transition-colors">
+                  <ImageIcon className="w-5 h-5 text-[#EFF4FF]/40" />
+                  <span className="text-sm text-[#EFF4FF]/40 font-mono">Click to upload image (JPG, PNG, WebP)</span>
                   <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
                 </label>
               )}
             </div>
 
-            <div className="bg-zinc-800/50 rounded-lg px-3 py-2.5 flex items-start gap-2">
-              <Shield className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-zinc-400">
+            <div className="bg-white/5 rounded-lg px-3 py-2.5 flex items-start gap-2">
+              <Shield className="w-4 h-4 text-[#6FFF00] mt-0.5 flex-shrink-0" />
+              <p className="text-xs text-[#EFF4FF]/50 font-mono">
                 Your content will be checked against EU AI Act, GDPR, copyright law, and international content standards before generation. This costs 50 tokens per check + 50 tokens for the final video.
               </p>
             </div>
@@ -310,34 +308,34 @@ export function GenerateDialog({
         {/* LOADING STEPS */}
         {(step === "transcribing" || step === "checking" || step === "modifying" || step === "generating") && (
           <div className="flex flex-col items-center py-10 gap-5">
-            <div className="w-16 h-16 bg-blue-600/20 rounded-2xl flex items-center justify-center">
-              <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
+            <div className="w-16 h-16 bg-[#6FFF00]/10 rounded-2xl flex items-center justify-center">
+              <Loader2 className="w-8 h-8 text-[#6FFF00] animate-spin" />
             </div>
             <div className="text-center space-y-1">
-              <div className="text-white font-semibold text-lg">
+              <div className="text-[#EFF4FF] font-grotesk uppercase tracking-wide text-lg">
                 {step === "transcribing" && "Analyzing input"}
                 {step === "checking" && "Legal compliance check"}
                 {step === "modifying" && "Finding workarounds"}
                 {step === "generating" && "Generating video"}
               </div>
-              <div className="text-blue-400 text-sm font-mono bg-blue-950/40 border border-blue-900/40 rounded-lg px-4 py-2 mt-2">
+              <div className="text-[#6FFF00] text-sm font-mono bg-[#6FFF00]/10 border border-[#6FFF00]/20 rounded-lg px-4 py-2 mt-2">
                 ▶ {statusMsg}
               </div>
             </div>
             <div className="w-full max-w-xs">
-              <div className="flex justify-between text-xs text-zinc-500 mb-1">
+              <div className="flex justify-between text-xs text-[#EFF4FF]/40 font-mono mb-1">
                 {["Analyze", "Legal Check", "Modify", "Generate"].map((label, i) => (
                   <span key={label} className={
                     (step === "transcribing" && i === 0) ||
                     (step === "checking" && i === 1) ||
                     (step === "modifying" && i === 2) ||
                     (step === "generating" && i === 3)
-                      ? "text-blue-400 font-medium" : ""
+                      ? "text-[#6FFF00]" : ""
                   }>{label}</span>
                 ))}
               </div>
-              <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500 rounded-full transition-all duration-500" style={{
+              <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-[#6FFF00] rounded-full transition-all duration-500" style={{
                   width: step === "transcribing" ? "15%" : step === "checking" ? "40%" : step === "modifying" ? "65%" : "85%"
                 }} />
               </div>
@@ -348,10 +346,10 @@ export function GenerateDialog({
         {/* AUDIO/REVIEW STEP */}
         {step === "audio" && plannerResult && (
           <div className="space-y-4">
-            <div className="bg-red-950/30 border border-red-800/50 rounded-xl p-4">
+            <div className="bg-red-950/20 border border-red-800/40 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
                 <AlertTriangle className="w-4 h-4 text-red-400" />
-                <span className="text-red-300 font-medium text-sm">{violations.length} violation{violations.length !== 1 ? "s" : ""} found</span>
+                <span className="text-red-300 font-mono text-sm uppercase tracking-wide">{violations.length} violation{violations.length !== 1 ? "s" : ""} found</span>
               </div>
               <div className="space-y-2">
                 {violations.slice(0, 3).map((v) => (
@@ -360,28 +358,27 @@ export function GenerateDialog({
                       {v.severity}
                     </span>
                     <div>
-                      <span className="text-xs text-zinc-300 font-medium">{v.ruleTitle}</span>
-                      <p className="text-xs text-zinc-400 mt-0.5">{v.explanation}</p>
+                      <span className="text-xs text-[#EFF4FF]/80 font-medium">{v.ruleTitle}</span>
+                      <p className="text-xs text-[#EFF4FF]/50 mt-0.5 font-mono">{v.explanation}</p>
                     </div>
                   </div>
                 ))}
                 {violations.length > 3 && (
-                  <p className="text-xs text-zinc-500">+{violations.length - 3} more violations</p>
+                  <p className="text-xs text-[#EFF4FF]/30 font-mono">+{violations.length - 3} more violations</p>
                 )}
               </div>
             </div>
 
-            <div className="bg-emerald-950/30 border border-emerald-800/50 rounded-xl p-4">
+            <div className="bg-[#6FFF00]/10 border border-[#6FFF00]/20 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-2">
-                <CheckCircle className="w-4 h-4 text-emerald-400" />
-                <span className="text-emerald-300 font-medium text-sm">Modified prompt ready</span>
-                <span className="ml-auto text-xs text-emerald-400">{plannerResult.contextPreservationScore}% context preserved</span>
+                <CheckCircle className="w-4 h-4 text-[#6FFF00]" />
+                <span className="text-[#6FFF00] font-mono text-sm uppercase tracking-wide">Modified prompt ready</span>
+                <span className="ml-auto text-xs text-[#6FFF00]/70 font-mono">{plannerResult.contextPreservationScore}% context preserved</span>
               </div>
-              <p className="text-xs text-zinc-300 bg-zinc-900 rounded-lg p-3 leading-relaxed border border-zinc-800">
+              <p className="text-xs text-[#EFF4FF]/70 bg-white/5 rounded-lg p-3 leading-relaxed border border-white/10 font-mono">
                 {plannerResult.modifiedPrompt}
               </p>
             </div>
-
 
             <div className="flex gap-3">
               <Button onClick={handleApprove} variant="success" className="flex-1">
@@ -397,10 +394,10 @@ export function GenerateDialog({
         {/* DONE STEP */}
         {step === "done" && videoUrl && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-emerald-400 font-semibold text-lg">
+            <div className="flex items-center gap-2 text-[#6FFF00] font-grotesk uppercase tracking-wide text-lg">
               <CheckCircle className="w-6 h-6" /> Video ready!
             </div>
-            <div className="bg-black rounded-xl overflow-hidden border border-zinc-700">
+            <div className="bg-black rounded-xl overflow-hidden border border-white/10">
               <video
                 src={videoUrl}
                 controls
@@ -424,11 +421,11 @@ export function GenerateDialog({
         {/* ERROR STEP */}
         {step === "error" && (
           <div className="space-y-4">
-            <div className="flex items-start gap-3 bg-red-950/30 border border-red-800 rounded-xl p-4">
+            <div className="flex items-start gap-3 bg-red-950/20 border border-red-800/40 rounded-xl p-4">
               <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-red-300 font-medium">Something went wrong</p>
-                <p className="text-red-400/80 text-sm mt-1">{errorMessage}</p>
+                <p className="text-red-300 font-mono uppercase tracking-wide text-sm">Something went wrong</p>
+                <p className="text-red-400/80 text-sm mt-1 font-mono">{errorMessage}</p>
               </div>
             </div>
             <Button onClick={resetDialog} variant="outline" className="w-full">Try again</Button>

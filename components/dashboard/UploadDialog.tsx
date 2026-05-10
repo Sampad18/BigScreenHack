@@ -187,7 +187,6 @@ export function UploadDialog({
     if (result.isCompliant) {
       setStep("compliant");
       router.refresh();
-      // Describe what the video depicts
       fetch("/api/audio", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -223,9 +222,8 @@ export function UploadDialog({
 
   async function handleApprove() {
     if (!generationId || !plannerResult) return;
-    // For video check, generate a new compliant video from the modified prompt
     toast.info("Generating a compliant version of your video...");
-    setStep("checking"); // reuse checking spinner
+    setStep("checking");
 
     const res = await fetch("/api/generate-video", {
       method: "POST",
@@ -250,17 +248,17 @@ export function UploadDialog({
       CRITICAL: "text-red-400 bg-red-950/50 border-red-800",
       HIGH: "text-orange-400 bg-orange-950/50 border-orange-800",
       MEDIUM: "text-yellow-400 bg-yellow-950/50 border-yellow-800",
-      LOW: "text-blue-400 bg-blue-950/50 border-blue-800",
+      LOW: "text-[#6FFF00] bg-[#6FFF00]/10 border-[#6FFF00]/30",
     };
-    return map[s] ?? "text-zinc-400 bg-zinc-800 border-zinc-700";
+    return map[s] ?? "text-[#EFF4FF]/60 bg-white/5 border-white/10";
   }
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Upload className="w-5 h-5 text-violet-400" /> Check Video Compliance
+          <DialogTitle className="flex items-center gap-2 font-grotesk uppercase tracking-wide">
+            <Upload className="w-5 h-5 text-[#6FFF00]" /> Check Video Compliance
           </DialogTitle>
           <DialogDescription>
             Upload a video to check it against EU AI Act, GDPR, copyright, and content standards.
@@ -272,31 +270,31 @@ export function UploadDialog({
           <div className="space-y-4">
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-zinc-700 hover:border-violet-700 rounded-xl p-10 flex flex-col items-center gap-3 cursor-pointer transition-colors"
+              className="border-2 border-dashed border-white/10 hover:border-[#6FFF00]/40 rounded-xl p-10 flex flex-col items-center gap-3 cursor-pointer transition-colors"
             >
-              <Film className="w-10 h-10 text-zinc-500" />
+              <Film className="w-10 h-10 text-[#EFF4FF]/30" />
               {videoFile ? (
                 <div className="text-center">
-                  <p className="text-white font-medium">{videoFile.name}</p>
-                  <p className="text-zinc-400 text-sm">{(videoFile.size / 1024 / 1024).toFixed(1)} MB</p>
+                  <p className="text-[#EFF4FF] font-medium">{videoFile.name}</p>
+                  <p className="text-[#EFF4FF]/40 text-sm font-mono">{(videoFile.size / 1024 / 1024).toFixed(1)} MB</p>
                 </div>
               ) : (
                 <div className="text-center">
-                  <p className="text-zinc-300 font-medium">Click to upload video</p>
-                  <p className="text-zinc-500 text-sm mt-1">MP4 or WebM, up to 500MB</p>
+                  <p className="text-[#EFF4FF]/70 font-mono uppercase tracking-wider text-sm">Click to upload video</p>
+                  <p className="text-[#EFF4FF]/30 text-xs mt-1 font-mono">MP4 or WebM, up to 500MB</p>
                 </div>
               )}
               <input ref={fileInputRef} type="file" accept="video/mp4,video/webm" className="hidden" onChange={handleVideoChange} />
             </div>
 
-            <div className="bg-zinc-800/50 rounded-lg px-3 py-2.5 flex items-start gap-2">
-              <Shield className="w-4 h-4 text-violet-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-zinc-400">
-                Your video will be transcribed and analyzed against 30+ legal rules. If violations are found, you can accept a compliant modified version.
+            <div className="bg-white/5 rounded-lg px-3 py-2.5 flex items-start gap-2">
+              <Shield className="w-4 h-4 text-[#6FFF00] mt-0.5 flex-shrink-0" />
+              <p className="text-xs text-[#EFF4FF]/50 font-mono">
+                Your video will be analyzed visually across key frames and checked against 30+ legal rules. If violations are found, you can accept a compliant modified version.
               </p>
             </div>
 
-            <Button onClick={startCheck} className="w-full bg-violet-600 hover:bg-violet-700" disabled={!videoFile}>
+            <Button onClick={startCheck} className="w-full" disabled={!videoFile}>
               <Shield className="w-4 h-4 mr-2" /> Run Compliance Check
             </Button>
           </div>
@@ -305,17 +303,17 @@ export function UploadDialog({
         {/* LOADING */}
         {["uploading", "transcribing", "checking", "modifying"].includes(step) && (
           <div className="flex flex-col items-center py-12 gap-4">
-            <div className="w-16 h-16 bg-violet-600/20 rounded-2xl flex items-center justify-center">
-              <Loader2 className="w-8 h-8 text-violet-400 animate-spin" />
+            <div className="w-16 h-16 bg-[#6FFF00]/10 rounded-2xl flex items-center justify-center">
+              <Loader2 className="w-8 h-8 text-[#6FFF00] animate-spin" />
             </div>
             <div className="text-center">
-              <div className="text-white font-medium text-lg">
+              <div className="text-[#EFF4FF] font-grotesk uppercase tracking-wide text-lg">
                 {step === "uploading" && "Uploading video..."}
                 {step === "transcribing" && "Analyzing video content..."}
                 {step === "checking" && "Running legal compliance check..."}
                 {step === "modifying" && "Finding compliant workarounds..."}
               </div>
-              <div className="text-zinc-400 text-sm mt-1">
+              <div className="text-[#EFF4FF]/40 font-mono text-sm mt-1">
                 {step === "transcribing" && "AI is watching key frames of your video"}
                 {step === "checking" && "Checking against 30+ EU and international rules"}
               </div>
@@ -327,11 +325,11 @@ export function UploadDialog({
         {step === "compliant" && (
           <div className="space-y-4">
             <div className="flex flex-col items-center py-8 gap-3">
-              <div className="w-16 h-16 bg-emerald-600/20 rounded-2xl flex items-center justify-center">
-                <CheckCircle className="w-8 h-8 text-emerald-400" />
+              <div className="w-16 h-16 bg-[#6FFF00]/10 rounded-2xl flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-[#6FFF00]" />
               </div>
-              <div className="text-white font-semibold text-xl">Video is Compliant!</div>
-              <p className="text-zinc-400 text-sm text-center max-w-sm">
+              <div className="text-[#EFF4FF] font-grotesk uppercase tracking-wide text-xl">Video is Compliant!</div>
+              <p className="text-[#EFF4FF]/50 font-mono text-sm text-center max-w-sm">
                 Your video passed all legal checks. No violations were found against EU AI Act, GDPR, copyright law, or content safety standards.
               </p>
             </div>
@@ -342,10 +340,10 @@ export function UploadDialog({
         {/* AUDIO/REVIEW */}
         {step === "audio" && plannerResult && (
           <div className="space-y-4">
-            <div className="bg-red-950/30 border border-red-800/50 rounded-xl p-4">
+            <div className="bg-red-950/20 border border-red-800/40 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
                 <AlertTriangle className="w-4 h-4 text-red-400" />
-                <span className="text-red-300 font-medium text-sm">{violations.length} violation{violations.length !== 1 ? "s" : ""} found</span>
+                <span className="text-red-300 font-mono uppercase tracking-wide text-sm">{violations.length} violation{violations.length !== 1 ? "s" : ""} found</span>
               </div>
               <div className="space-y-2">
                 {violations.slice(0, 4).map((v) => (
@@ -354,18 +352,17 @@ export function UploadDialog({
                       {v.severity}
                     </span>
                     <div>
-                      <span className="text-xs text-zinc-300 font-medium">{v.ruleTitle}</span>
-                      <p className="text-xs text-zinc-400 mt-0.5">{v.explanation}</p>
+                      <span className="text-xs text-[#EFF4FF]/80 font-medium">{v.ruleTitle}</span>
+                      <p className="text-xs text-[#EFF4FF]/50 mt-0.5 font-mono">{v.explanation}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-
-            <div className="bg-emerald-950/30 border border-emerald-800/50 rounded-xl p-3">
-              <p className="text-xs text-zinc-400">
-                <span className="text-emerald-400 font-medium">Proposed fix:</span> The planner will generate a new compliant video based on the modified prompt ({plannerResult.contextPreservationScore}% context preserved).
+            <div className="bg-[#6FFF00]/10 border border-[#6FFF00]/20 rounded-xl p-3">
+              <p className="text-xs text-[#EFF4FF]/50 font-mono">
+                <span className="text-[#6FFF00] font-medium">Proposed fix:</span> The planner will generate a new compliant video based on the modified prompt ({plannerResult.contextPreservationScore}% context preserved).
               </p>
             </div>
 
@@ -383,10 +380,10 @@ export function UploadDialog({
         {/* DONE */}
         {step === "done" && outputVideoUrl && (
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-emerald-400 font-medium">
+            <div className="flex items-center gap-2 text-[#6FFF00] font-grotesk uppercase tracking-wide">
               <CheckCircle className="w-5 h-5" /> Compliant video generated!
             </div>
-            <video src={outputVideoUrl} controls className="w-full rounded-xl border border-zinc-700 bg-black" />
+            <video src={outputVideoUrl} controls className="w-full rounded-xl border border-white/10 bg-black" />
             <div className="flex gap-3">
               <a href={outputVideoUrl} download className="flex-1">
                 <Button variant="success" className="w-full">Download Video</Button>
@@ -399,11 +396,11 @@ export function UploadDialog({
         {/* ERROR */}
         {step === "error" && (
           <div className="space-y-4">
-            <div className="flex items-start gap-3 bg-red-950/30 border border-red-800 rounded-xl p-4">
+            <div className="flex items-start gap-3 bg-red-950/20 border border-red-800/40 rounded-xl p-4">
               <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-red-300 font-medium">Something went wrong</p>
-                <p className="text-red-400/80 text-sm mt-1">{errorMessage}</p>
+                <p className="text-red-300 font-mono uppercase tracking-wide text-sm">Something went wrong</p>
+                <p className="text-red-400/80 text-sm mt-1 font-mono">{errorMessage}</p>
               </div>
             </div>
             <Button onClick={resetDialog} variant="outline" className="w-full">Try again</Button>
