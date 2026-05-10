@@ -5,14 +5,23 @@ import WebSocket from "ws";
 const RUNWARE_API = "https://api.runware.ai/v1";
 
 async function runwareRequest(tasks: object[]) {
-  const res = await fetch(RUNWARE_API, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.RUNWARE_API_KEY}`,
-    },
-    body: JSON.stringify(tasks),
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 25_000);
+
+  let res: Response;
+  try {
+    res = await fetch(RUNWARE_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.RUNWARE_API_KEY}`,
+      },
+      body: JSON.stringify(tasks),
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 
   if (!res.ok) {
     const err = await res.text();
