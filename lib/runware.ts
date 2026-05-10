@@ -139,35 +139,26 @@ export async function transcribeVideoUrl(videoUrl: string): Promise<string> {
   });
 }
 
-// Submit a video caption job — returns taskUUID immediately (memories:1@1 is always async).
-export async function submitCaptionJob(videoUrl: string): Promise<string> {
+// Analyze video content using Gemini 3.1 Flash Lite via Runware textInference.
+// Supports video URLs natively via inputs.videos; sync delivery avoids polling.
+export async function analyzeVideoWithGemini(videoUrl: string): Promise<string> {
   const taskUUID = uuidv4();
-  await runwareRequest([{
-    taskType: "caption",
+  const data = await runwareRequest([{
+    taskType: "textInference",
     taskUUID,
-    model: "memories:1@1",
-    inputs: { video: videoUrl },
+    model: "google:gemini@3.1-flash-lite",
+    systemPrompt: "You are a video content compliance analyst. Describe everything visible in the video in thorough detail — all people, activities, objects, on-screen text, logos, scenes, and any content relevant to compliance review under EU AI Act, GDPR, copyright law, and content safety standards.",
+    messages: [{
+      role: "user",
+      content: "Analyze this video and provide a detailed description of all visual content for compliance review.",
+    }],
+    inputs: { videos: [videoUrl] },
+    maxTokens: 1024,
+    deliveryMethod: "sync",
   }]);
-  return taskUUID;
-}
 
-// Poll for a submitted caption job — call from a client-side polling loop.
-export async function pollCaptionJob(taskUUID: string): Promise<{ status: "pending" | "completed" | "failed"; text?: string; error?: string }> {
-  let data: Record<string, unknown>[];
-  try {
-    data = await runwareRequest([{ taskType: "getResponse", taskUUID }]);
-  } catch {
-    return { status: "pending" };
-  }
-
-  if (!Array.isArray(data) || data.length === 0) return { status: "pending" };
-
-  const result = data[0] as Record<string, unknown>;
-  if (result.text) return { status: "completed", text: result.text as string };
-  if (result.status === "failed" || result.error) {
-    return { status: "failed", error: (result.errorMessage as string) ?? "Video captioning failed" };
-  }
-  return { status: "pending" };
+  const result = (Array.isArray(data) ? data[0] : data) as Record<string, unknown>;
+  return (result?.text ?? "") as string;
 }
 
 export interface VideoGenParams {

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { submitCaptionJob } from "@/lib/runware";
+import { analyzeVideoWithGemini } from "@/lib/runware";
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,19 +13,16 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { text, videoUrl, generationId } = body;
 
-    // Video path: submit async caption job, client will poll /api/poll-caption
+    let combinedText = text ?? "";
+
     if (videoUrl) {
-      const captionTaskUUID = await submitCaptionJob(videoUrl);
-
-      if (generationId) {
-        await supabase.from("generations").update({ status: "checking" }).eq("id", generationId);
+      const description = await analyzeVideoWithGemini(videoUrl);
+      if (!description) {
+        throw new Error("Gemini could not analyze the video. Ensure the video URL is publicly accessible and try again.");
       }
-
-      return NextResponse.json({ captionTaskUUID });
+      combinedText = `Video content description:\n\n${description}`;
     }
 
-    // Text path: return immediately
-    const combinedText = text ?? "";
     if (generationId) {
       await supabase.from("generations").update({
         original_prompt: combinedText,
