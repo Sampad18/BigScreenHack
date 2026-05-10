@@ -6,6 +6,7 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { Shield, Video, CheckCircle, Zap, Scale, Globe, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Landing page with animated background
 export default async function Home() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
