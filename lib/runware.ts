@@ -148,7 +148,7 @@ export async function captionVideoContent(videoUrl: string): Promise<string> {
   const submitData = await runwareRequest([{
     taskType: "caption",
     taskUUID,
-    model: "memories-video-captioning",
+    model: "memories:2@1",
     inputs: { video: videoUrl },
     deliveryMethod: "async",
   }]);
