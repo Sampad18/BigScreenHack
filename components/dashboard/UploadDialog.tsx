@@ -222,19 +222,45 @@ export function UploadDialog({
 
   async function handleApprove() {
     if (!generationId || !plannerResult) return;
-    toast.info("Generating a compliant version of your video...");
+    toast.info("Submitting compliant video for generation...");
     setStep("checking");
 
-    const res = await fetch("/api/generate-video", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt: plannerResult.modifiedPrompt, generationId }),
-    });
-    const data = await res.json();
-    if (!res.ok) { setErrorMessage(data.error); setStep("error"); return; }
-    setOutputVideoUrl(data.videoUrl);
-    setStep("done");
-    router.refresh();
+    try {
+      const res = await fetch("/api/generate-video", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: plannerResult.modifiedPrompt, generationId }),
+      });
+      const submitData = await res.json();
+      if (!res.ok) { setErrorMessage(submitData.error); setStep("error"); return; }
+
+      const { taskUUID } = submitData;
+
+      // Poll every 8 seconds until done (up to 6 minutes)
+      for (let i = 0; i < 45; i++) {
+        await new Promise((r) => setTimeout(r, 8000));
+        const pollRes = await fetch(`/api/poll-video?taskUUID=${taskUUID}&generationId=${generationId}`);
+        const pollData = await pollRes.json();
+
+        if (pollData.status === "completed" && pollData.videoUrl) {
+          setOutputVideoUrl(pollData.videoUrl);
+          setStep("done");
+          router.refresh();
+          return;
+        }
+        if (pollData.status === "failed") {
+          setErrorMessage(pollData.error ?? "Runware video generation failed");
+          setStep("error");
+          return;
+        }
+      }
+
+      setErrorMessage("Video generation timed out after 6 minutes");
+      setStep("error");
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : "Unexpected error");
+      setStep("error");
+    }
   }
 
   async function handleReject() {

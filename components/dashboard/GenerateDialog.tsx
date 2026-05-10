@@ -200,19 +200,40 @@ export function GenerateDialog({
 
   async function generateVideo(genId: string, finalPrompt: string) {
     setStep("generating");
-    setStatusMsg("Sending prompt to Runware Seedance 2.0 Fast...");
+    setStatusMsg("Submitting to Runware Seedance 2.0 Fast...");
+
     const res = await fetch("/api/generate-video", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt: finalPrompt, generationId: genId }),
     });
-    setStatusMsg("Waiting for Runware to render video (30–60s)...");
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error ?? "Video generation failed");
-    setStatusMsg("Storing video...");
-    setVideoUrl(result.videoUrl);
-    setStep("done");
-    router.refresh();
+    const submitResult = await res.json();
+    if (!res.ok) throw new Error(submitResult.error ?? "Video submission failed");
+
+    const { taskUUID } = submitResult;
+    setStatusMsg("Video is rendering... this takes 2–4 minutes. Please keep this tab open.");
+
+    // Poll every 8 seconds until done (up to 6 minutes)
+    for (let i = 0; i < 45; i++) {
+      await new Promise((r) => setTimeout(r, 8000));
+      const pollRes = await fetch(`/api/poll-video?taskUUID=${taskUUID}&generationId=${genId}`);
+      const pollData = await pollRes.json();
+
+      if (pollData.status === "completed" && pollData.videoUrl) {
+        setVideoUrl(pollData.videoUrl);
+        setStep("done");
+        router.refresh();
+        return;
+      }
+      if (pollData.status === "failed") {
+        throw new Error(pollData.error ?? "Runware video generation failed");
+      }
+
+      const elapsed = Math.round(((i + 1) * 8) / 60);
+      setStatusMsg(`Rendering in progress... (~${elapsed} min elapsed, keep this tab open)`);
+    }
+
+    throw new Error("Video generation timed out after 6 minutes");
   }
 
   const stepLabels: Record<Step, string> = {

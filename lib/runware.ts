@@ -65,16 +65,21 @@ export async function transcribeVideo(videoUrl: string): Promise<string> {
 }
 
 export async function captionImage(imageInput: string): Promise<string> {
+  // Runware expects raw base64, not a data URL — strip the prefix if present
+  const imageData = imageInput.startsWith("data:")
+    ? imageInput.split(",")[1]
+    : imageInput;
+
   const data = await runwareRequest([
     {
       taskType: "caption",
       taskUUID: uuidv4(),
       model: "runware:151@1",
-      inputImage: imageInput,
+      inputImage: imageData,
       prompt: "This is a frame from a video. Describe what you see in detail: people, objects, text, brands, activities, setting, and anything that could raise legal or compliance concerns.",
     },
   ]);
-  return data[0]?.text ?? data[0]?.structuredData ?? "";
+  return data[0]?.text ?? data[0]?.caption ?? data[0]?.structuredData ?? "";
 }
 
 export interface VideoGenParams {
@@ -85,39 +90,36 @@ export interface VideoGenParams {
   model?: string;
 }
 
-// Video generation via Runware WebSocket API with async polling
-export async function generateVideo(params: VideoGenParams): Promise<string> {
+// Submit video job via WebSocket — returns taskUUID immediately after acknowledgment.
+// Does NOT wait for the video to render (that can take 2-5 minutes).
+export async function submitVideoJob(params: VideoGenParams): Promise<string> {
   const apiKey = process.env.RUNWARE_API_KEY!;
   const WS_URL = "wss://ws-api.runware.ai/v1";
+  const videoTaskUUID = uuidv4();
 
   return new Promise<string>((resolve, reject) => {
     const ws = new WebSocket(WS_URL, { perMessageDeflate: false } as WebSocket.ClientOptions);
-    let resolved = false;
-    let videoTaskUUID: string | null = null;
-    let pollInterval: ReturnType<typeof setInterval> | null = null;
+    let settled = false;
 
-    const done = (url: string) => {
-      if (resolved) return;
-      resolved = true;
-      if (pollInterval) clearInterval(pollInterval);
+    const done = (uuid: string) => {
+      if (settled) return;
+      settled = true;
       clearTimeout(timeout);
       try { ws.close(); } catch {}
-      console.log("Runware video URL:", url);
-      resolve(url);
+      resolve(uuid);
     };
 
     const fail = (err: Error) => {
-      if (resolved) return;
-      resolved = true;
-      if (pollInterval) clearInterval(pollInterval);
+      if (settled) return;
+      settled = true;
       clearTimeout(timeout);
       try { ws.close(); } catch {}
       reject(err);
     };
 
     const timeout = setTimeout(() => {
-      fail(new Error("Runware video generation timeout (300s)"));
-    }, 300_000);
+      fail(new Error("Runware submission timeout (30s)"));
+    }, 30_000);
 
     const send = (tasks: object[]) => {
       if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(tasks));
@@ -134,14 +136,15 @@ export async function generateVideo(params: VideoGenParams): Promise<string> {
         items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.data) ? parsed.data : []);
       } catch { return; }
 
-      console.log("Runware WS:", JSON.stringify(items));
-
       for (const item of items) {
         const obj = item as Record<string, unknown>;
 
-        // Auth success — submit video inference task
+        if (obj.error || (Array.isArray(obj.errors) && (obj.errors as unknown[]).length)) {
+          fail(new Error((obj.errorMessage as string) ?? "Runware submission error"));
+          return;
+        }
+
         if (obj.taskType === "authentication" && !obj.error) {
-          videoTaskUUID = uuidv4();
           send([{
             taskType: "videoInference",
             taskUUID: videoTaskUUID,
@@ -157,37 +160,10 @@ export async function generateVideo(params: VideoGenParams): Promise<string> {
           continue;
         }
 
-        // Initial ack from videoInference — start polling for completion
-        if (obj.taskType === "videoInference" && obj.taskUUID === videoTaskUUID && !pollInterval) {
-          pollInterval = setInterval(() => {
-            send([{ taskType: "getResponse", taskUUID: videoTaskUUID }]);
-          }, 2000);
-          continue;
-        }
-
-        // Error handling
-        if (obj.error || (Array.isArray(obj.errors) && (obj.errors as unknown[]).length)) {
-          const errMsg = (obj.errorMessage as string) ?? JSON.stringify(obj.errors ?? obj.error);
-          fail(new Error(`Runware error: ${errMsg}`));
+        // Acknowledgment received — job is queued, return taskUUID
+        if (obj.taskType === "videoInference" && obj.taskUUID === videoTaskUUID) {
+          done(videoTaskUUID);
           return;
-        }
-
-        // Response with status=success — videoURL is the CDN URL, videoUUID is just the UUID
-        if (obj.status === "success") {
-          const url =
-            (obj.videoURL as string) ??
-            (obj.videoUrl as string) ??
-            (obj.url as string) ?? "";
-          if (url) { done(url); return; }
-        }
-
-        // Direct response on videoInference taskUUID (sync fallback)
-        if (obj.taskUUID === videoTaskUUID) {
-          const url =
-            (obj.videoURL as string) ??
-            (obj.videoUrl as string) ??
-            (obj.url as string) ?? "";
-          if (url) { done(url); return; }
         }
       }
     });
@@ -197,9 +173,32 @@ export async function generateVideo(params: VideoGenParams): Promise<string> {
     });
 
     ws.on("close", (code: number) => {
-      if (!resolved) {
-        fail(new Error(`Runware WebSocket closed unexpectedly (code ${code})`));
-      }
+      if (!settled) fail(new Error(`Runware WebSocket closed unexpectedly (code ${code})`));
     });
   });
+}
+
+// Poll for a submitted video job via REST — call this every few seconds from the client.
+export async function pollVideoJob(taskUUID: string): Promise<{ status: "pending" | "completed" | "failed"; videoUrl?: string; error?: string }> {
+  let data: Record<string, unknown>[];
+  try {
+    data = await runwareRequest([{ taskType: "getResponse", taskUUID }]);
+  } catch {
+    return { status: "pending" };
+  }
+
+  if (!Array.isArray(data) || data.length === 0) return { status: "pending" };
+
+  const result = data[0] as Record<string, unknown>;
+
+  if (result.status === "success") {
+    const videoUrl = (result.videoURL ?? result.videoUrl ?? result.url) as string | undefined;
+    if (videoUrl) return { status: "completed", videoUrl };
+  }
+
+  if (result.status === "failed" || result.error) {
+    return { status: "failed", error: (result.errorMessage as string) ?? "Runware generation failed" };
+  }
+
+  return { status: "pending" };
 }
