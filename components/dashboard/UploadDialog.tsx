@@ -162,10 +162,8 @@ export function UploadDialog({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageFrames: frames, generationId: gen.id }),
       });
-      const transcribeText = await transcribeRes.text();
-      if (!transcribeText) throw new Error("Video analysis timed out — the server returned an empty response. Please try a shorter video.");
-      const transcribeData = JSON.parse(transcribeText);
-      if (!transcribeRes.ok) throw new Error(transcribeData.error ?? "Video analysis failed");
+      const transcribeData = await transcribeRes.json();
+      if (!transcribeRes.ok) throw new Error("Video analysis failed");
       setTranscript(transcribeData.combinedText);
 
       // Lawyer check
@@ -183,9 +181,7 @@ export function UploadDialog({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content, generationId: genId }),
     });
-    const lawyerText = await res.text();
-    if (!lawyerText) throw new Error("Compliance check timed out — server returned empty response.");
-    const result = JSON.parse(lawyerText);
+    const result = await res.json();
     if (!res.ok) throw new Error(result.error ?? "Lawyer agent failed");
 
     if (result.isCompliant) {
@@ -209,9 +205,7 @@ export function UploadDialog({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content, violations: viols, generationId: genId }),
     });
-    const plannerText = await res.text();
-    if (!plannerText) throw new Error("Planner timed out — server returned empty response.");
-    const result = JSON.parse(plannerText);
+    const result = await res.json();
     if (!res.ok) throw new Error(result.error ?? "Planner agent failed");
     setPlannerResult(result);
 
@@ -220,8 +214,7 @@ export function UploadDialog({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ violations: viols, generationId: genId }),
     });
-    const audioText = await audioRes.text();
-    const audioData = audioText ? JSON.parse(audioText) : {};
+    const audioData = await audioRes.json();
     if (audioRes.ok && audioData.audioUrl) setAudioUrl(audioData.audioUrl);
 
     setStep("audio");
