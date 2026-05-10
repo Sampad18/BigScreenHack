@@ -122,9 +122,6 @@ export function UploadDialog({
     try {
       const { data: { user } } = await supabase.auth.getUser();
 
-      // Extract video frames client-side and upload in parallel
-      const framesPromise = extractVideoFrames(videoFile, 4);
-
       // Get signed upload URL from server (bypasses RLS)
       const urlRes = await fetch("/api/upload-url", {
         method: "POST",
@@ -155,12 +152,11 @@ export function UploadDialog({
 
       setStep("transcribing");
 
-      // Wait for frames and send them for AI visual analysis
-      const frames = await framesPromise;
+      // Send uploaded video URL to Runware video-to-text model
       const transcribeRes = await fetch("/api/transcribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageFrames: frames, generationId: gen.id }),
+        body: JSON.stringify({ videoUrl: publicUrl, generationId: gen.id }),
       });
       const transcribeData = await transcribeRes.json();
       if (!transcribeRes.ok) throw new Error(transcribeData.error ?? "Video analysis failed");

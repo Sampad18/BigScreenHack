@@ -65,25 +65,14 @@ export async function transcribeVideo(videoUrl: string): Promise<string> {
   throw new Error("Transcription timeout after 3 minutes");
 }
 
-// Caption multiple images using the Runware SDK (handles auth + WebSocket internally).
-// Returns one caption string per image in the same order.
-export async function captionImages(imageInputs: string[]): Promise<string[]> {
+// Analyze a video URL using Runware's video-to-text model.
+export async function analyzeVideoUrl(videoUrl: string): Promise<string> {
   const runware = new RunwareServer({ apiKey: process.env.RUNWARE_API_KEY! });
-
-  const captions = await Promise.all(
-    imageInputs.map(async (input) => {
-      const imageData = input.startsWith("data:") ? input.split(",")[1] : input;
-      try {
-        const result = await runware.caption({ inputImage: imageData });
-        const r = result as unknown as { text?: string };
-        return r?.text ?? "";
-      } catch {
-        return "";
-      }
-    })
-  );
-
-  return captions;
+  const result = await runware.requestImageToText({
+    inputs: { video: videoUrl },
+  });
+  const r = result as unknown as { text?: string };
+  return r?.text ?? "";
 }
 
 export interface VideoGenParams {

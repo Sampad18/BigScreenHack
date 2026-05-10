@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { captionImages } from "@/lib/runware";
+import { analyzeVideoUrl } from "@/lib/runware";
 
 export const maxDuration = 200;
 
@@ -11,38 +11,19 @@ export async function POST(req: NextRequest) {
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await req.json();
-    const { text, imageBase64, imageFrames, generationId } = body;
+    const { text, videoUrl, generationId } = body;
 
     let combinedText = text ?? "";
 
-    // AI visual analysis: caption video frames via Runware WebSocket
-    if (imageFrames?.length) {
-      const frames = imageFrames as string[];
-      const captions = await captionImages(frames);
-      const valid = captions
-        .map((c, i) => (c ? `Frame ${i + 1}: ${c}` : null))
-        .filter(Boolean) as string[];
-      if (valid.length === 0) {
-        throw new Error("Runware frame captioning returned no results. Check RUNWARE_API_KEY and try again.");
+    // Video-to-text analysis using Runware's video understanding model
+    if (videoUrl) {
+      const analysis = await analyzeVideoUrl(videoUrl);
+      if (!analysis) {
+        throw new Error("Runware could not analyze the video. Please try again.");
       }
-      combinedText = `Video visual analysis (${valid.length} key frames):\n\n${valid.join("\n\n")}`;
+      combinedText = `Video content analysis:\n\n${analysis}`;
     }
 
-    // Caption a single image (used by GenerateDialog for image input)
-    if (imageBase64) {
-      try {
-        const [caption] = await captionImages([imageBase64]);
-        if (caption) {
-          combinedText = combinedText
-            ? `${combinedText}\n\nImage description: ${caption}`
-            : `Image description: ${caption}`;
-        }
-      } catch (captionErr) {
-        console.error("Image caption error:", captionErr);
-      }
-    }
-
-    // Update generation record
     if (generationId) {
       await supabase.from("generations").update({
         original_prompt: combinedText,
